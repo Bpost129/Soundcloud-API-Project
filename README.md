@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+<img src="desktop/SCdiagram1.jpg" alt="Alt text" title="Soundcloud-DB-diagram">
 
 ## API Documentation
 
