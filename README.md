@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-<img src="SCdiagram1.jpg" alt="Soundcloud Diagram" title="Soundcloud-DB-diagram">
+![Soundcloud Diagram](/SCdiagram1.jpg "Soundcloud Diagram")
 
 ## API Documentation
 
