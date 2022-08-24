@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![Soundcloud Diagram](https://dbdiagram.io/d/6306a068f1a9b01b0fd9ac6e "Soundcloud Diagram")
+<img src="https://dbdiagram.io/d/6306a068f1a9b01b0fd9ac6e" alt="Soundcloud Diagram">
 
 ## API Documentation
 
