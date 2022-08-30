@@ -5,25 +5,28 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [
       {
-        email: 'demo@user.io',
-        firstName: 'Demo',
-        lastName: 'Lition',
-        username: 'Demo-lition',
-        hashedPassword: bcrypt.hashSync('password')
+        email: 'Dualipa@user.io',
+        firstName: 'Dua',
+        lastName: 'Lipa',
+        username: 'DuaLipa',
+        hashedPassword: bcrypt.hashSync('password'),
+        imageUrl: "https://en.wikipedia.org/wiki/File:DuaLipaO2020522_(101_of_110)_(52052470251)_(cropped).jpg",
       },
       {
-        email: 'user1@user.io',
-        firstName: 'User',
-        lastName: 'One',
-        username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password2')
+        email: 'Publicenemy@user.io',
+        firstName: 'Public',
+        lastName: 'Enemy',
+        username: 'PublicEnemy1',
+        hashedPassword: bcrypt.hashSync('password2'),
+        imageUrl: "https://en.wikipedia.org/wiki/File:Public_Enemy-01-mika.jpg",
       },
       {
-        email: 'user2@user.io',
-        firstName: 'User',
-        lastName: 'Two',
-        username: 'FakeUser2',
-        hashedPassword: bcrypt.hashSync('password3')
+        email: 'Backstreetboys@user.io',
+        firstName: 'Backstreet',
+        lastName: 'Boys',
+        username: 'BackstreetBoys5',
+        hashedPassword: bcrypt.hashSync('password3'),
+        imageUrl: "https://en.wikipedia.org/wiki/File:Backstreet_Boys_2019_by_Glenn_Francis.jpg",
       }
     ], {});
   },
