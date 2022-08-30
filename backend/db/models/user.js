@@ -5,8 +5,8 @@ const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
-      const { id, username, firstName, lastName, email } = this; // context will be the User instance
-      return { id, username, firstName, lastName, email };
+      const { id, username, firstName, lastName, email, imageUrl } = this; // context will be the User instance
+      return { id, username, firstName, lastName, email, imageUrl };
     }
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
@@ -28,19 +28,24 @@ module.exports = (sequelize, DataTypes) => {
         return await User.scope('currentUser').findByPk(user.id);
       }
     }
-    static async signup({ firstName, lastName, username, email, password }) {
+    static async signup({ firstName, lastName, username, email, password, imageUrl }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         firstName, 
         lastName,
         username,
         email,
-        hashedPassword
+        hashedPassword,
+        imageUrl
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
     static associate(models) {
       // define association here
+      User.hasMany(models.Album, { foreignKey: 'userId' });
+      User.hasMany(models.Song, { foreignKey: 'userId' });
+      User.hasMany(models.Comment, { foreignKey: 'userId' });
+      User.hasMany(models.Playlist, { foreignKey: 'userId' });
     }
   };
 
@@ -86,6 +91,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           len: [60, 60]
         }
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
       }
     },
     {
