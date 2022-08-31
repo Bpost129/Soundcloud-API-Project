@@ -51,6 +51,10 @@ module.exports = (sequelize, DataTypes) => {
 
   User.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -94,7 +98,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       imageUrl: {
         type: DataTypes.STRING,
-        allowNull: false,
       }
     },
     {

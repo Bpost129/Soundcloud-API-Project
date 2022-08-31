@@ -19,13 +19,13 @@ module.exports = {
       },
       {
         userId: 2,
-        name: "Classics",
-        imageUrl: "https://images.squarespace-cdn.com/content/v1/52d6f3cee4b01cea685fa255/1543360566307-EMUOD5RM631ZM0Z9OA80/90s-2.jpg?format=1500w",
+        name: "Party",
+        imageUrl: "https://images.8tracks.com/cover/i/000/326/012/party-hard-9657.jpg?rect=0,0,500,500&q=98&fm=jpg&fit=max",
       },
       {
         userId: 3,
-        name: "Party",
-        imageUrl: "https://images.8tracks.com/cover/i/000/326/012/party-hard-9657.jpg?rect=0,0,500,500&q=98&fm=jpg&fit=max",
+        name: "Classics",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/52d6f3cee4b01cea685fa255/1543360566307-EMUOD5RM631ZM0Z9OA80/90s-2.jpg?format=1500w",
       },
     ], {})
   },

@@ -11,20 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // PlaylistSong.hasMany(models.Song, { foreignKey: 'songId' });
+      // PlaylistSong.hasMany(models.Playlist, { foreignKey: 'playlistId' });
     }
   }
   PlaylistSong.init({
     songId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     playlistId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     order: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
   }, {
     sequelize,
