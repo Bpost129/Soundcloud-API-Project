@@ -30,9 +30,9 @@ module.exports = {
      * }], {});
     */
     //  for(let i = 0; i < playlistSongs.length; i++) {
-    //   const data = playlistSongs[i];
-    //   const playlist =  await Playlist.findOne({ where: data.playlist });
-    //   const songs = await Song.findAll({ where: { [Op.or]: data.songs } });
+    //   let data = playlistSongs[i];
+    //   let playlist =  await Playlist.findOne({ where: data.playlist });
+    //   let songs = await Song.findAll({ where: { [Op.or]: data.songs } });
     //   await playlist.addSongs(songs);
     // }
   },
@@ -45,9 +45,9 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     //  for(let i = 0; i < playlistSongs.length; i++) {
-    //   const data = playlistSongs[i];
-    //   const playlist =  await Playlist.findOne({ where: data.playlist });
-    //   const songs = await Song.findAll({ where: { [Op.or]: data.songs } });
+    //   let data = playlistSongs[i];
+    //   let playlist =  await Playlist.findOne({ where: data.playlist });
+    //   let songs = await Song.findAll({ where: { [Op.or]: data.songs } });
     //   await playlist.removeSongs(songs);
     // }
   }
