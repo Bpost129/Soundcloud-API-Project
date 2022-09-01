@@ -1560,8 +1560,8 @@ Return songs filtered by query parameters.
           "previewImage": "image url"
         }
       ],
-      "page": 2,
-      "size": 25
+      "page": 1,
+      "size": 1
     }
     ```
 
