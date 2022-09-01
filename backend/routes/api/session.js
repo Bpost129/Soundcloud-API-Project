@@ -57,8 +57,12 @@ router.post(
         user = user.toJSON();
         user.token = token;
 
-        return res.json({
+        let user1 = await User.findOne({
             user,
+        })
+
+        return res.json({
+            user1,
         });
     }
 );
