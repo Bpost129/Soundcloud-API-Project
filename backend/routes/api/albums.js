@@ -69,14 +69,16 @@ router.get('/:albumId', async (req, res, next) => {
 // Create an album
 router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
+    const { id } = req.user.id;
     const { title, description, imageUrl } = req.body;
 
-    const album = await Album.create({
+    let album = await Album.create({
+        id,
         title,
         description,
         imageUrl,
     })
-    album = toJSON(album);
+    album = album.toJSON();
     // album[0].toJSON()
 
     res.json(album);

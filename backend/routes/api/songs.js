@@ -12,10 +12,10 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
     const songs = await Song.findAll()
 
-    // const songList = [];
-    // for (let song of songs) {
-    //     songList.push(song.toJSON())
-    // }
+    const songList = [];
+    for (let song of songs) {
+        songList.push(song.toJSON())
+    }
 
     res.json(songs);
 })
@@ -83,12 +83,29 @@ router.post('/', requireAuth, async (req, res, next) => {
         imageUrl,
     })
 
-    // album[0].toJSON()
+    song = song.toJSON();
 
     res.json(song);
 })
 
 // Create a song based on album id
+router.post('/', requireAuth, async (req, res, next) => {
+    // Requires Authentication
+    const { albumId } = req.album.id
+    const { title, description, url, imageUrl } = req.body;
+
+    const song = Song.create({
+        albumId,
+        title,
+        description,
+        url,
+        imageUrl,
+    })
+
+    song = song.toJSON();
+
+    res.json(song);
+})
 
 // Edit a song
 router.put('/:songId', requireAuth, async (req, res, next) => {
