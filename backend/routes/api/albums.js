@@ -71,12 +71,12 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
     const { title, description, imageUrl } = req.body;
 
-    const album = Album.create({
+    const album = await Album.create({
         title,
         description,
         imageUrl,
     })
-
+    album = toJSON(album);
     // album[0].toJSON()
 
     res.json(album);

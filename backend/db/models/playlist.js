@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
@@ -31,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     imageUrl: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
   }, {
     sequelize,

@@ -22,11 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     songId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
     },
     body: {
       type: DataTypes.STRING,

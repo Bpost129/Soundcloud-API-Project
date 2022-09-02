@@ -12,10 +12,10 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
     const songs = await Song.findAll()
 
-    const songList = [];
-    for (let song of songs) {
-        songList.push(song.toJSON())
-    }
+    // const songList = [];
+    // for (let song of songs) {
+    //     songList.push(song.toJSON())
+    // }
 
     res.json(songs);
 })
@@ -87,6 +87,8 @@ router.post('/', requireAuth, async (req, res, next) => {
 
     res.json(song);
 })
+
+// Create a song based on album id
 
 // Edit a song
 router.put('/:songId', requireAuth, async (req, res, next) => {
