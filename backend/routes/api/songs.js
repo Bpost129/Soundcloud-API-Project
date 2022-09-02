@@ -17,84 +17,55 @@ router.get('/', async (req, res, next) => {
         songList.push(song.toJSON())
     }
 
-    res.json(songs);
+    return res.json(songs);
 })
 
 // Get all songs created by the current user
-router.get('/current', requireAuth, async (req, res, next) => {
+router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
-    // const { current } = req.query;
-    // const id = current.id;
-    const userId = req.user.id
+    let { id } = req.user;
 
-    const songs = await Song.findAll({
+    let songs = await Song.findAll({
        where: {
-        attributes: {
-            userId,
-        }
+        userId: id,
        }
     })
 
-    const songList = [];
+    let songList = [];
     for (let song of songs) {
         songList.push(song.toJSON())
     }
 
-    res.json(songList);
-})
-
-// Get all songs of an artist from an id
-router.get('/artists/:artistId/songs', async (req, res, next) => {
-    const { userId } = req.params.artistId
-    const songs = await Song.findAll({
-        where: {
-            userId
-        }
-    })
-
-    const songList = [];
-    for (let song of songs) {
-        songList.push(song.toJSON())
-    }
-
-    res.json(songList);
+    return res.json(songList);
 })
 
 // Get details of a song from an id
 router.get('/:songId', async (req, res, next) => {
-    const { id } = req.params.songId
-    const song = await Song.findOne({
+    let { songId } = req.params
+    
+    let song = await Song.findOne({
         where: {
-            id
+            id: songId,
         }
-    })
-    res.json(song);
-})
-
-// Create a song
-router.post('/', requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    const { title, description, url, imageUrl } = req.body;
-
-    const song = Song.create({
-        title,
-        description,
-        url,
-        imageUrl,
     })
 
     song = song.toJSON();
-
-    res.json(song);
+    return res.json(song);
 })
 
-// Create a song based on album id
-router.post('/', requireAuth, async (req, res, next) => {
+// Create a song
+router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { albumId } = req.album.id
-    const { title, description, url, imageUrl } = req.body;
+    let { id } = req.user;
+    // let { albumId } = req.album.id;
+    const { title, description, url, imageUrl, albumId } = req.body;
 
-    const song = Song.create({
+    // albumId = parseInt(albumId);
+
+    let song = await Song.create({
+        // albumId: id,
+        // albumId,
+        userId: id,
         albumId,
         title,
         description,
@@ -110,11 +81,11 @@ router.post('/', requireAuth, async (req, res, next) => {
 // Edit a song
 router.put('/:songId', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { id } = req.params.songId
-    const { title, description, url, imageUrl } = req.body
-    const song = await Song.findOne({
+    let { songId } = req.params
+    let { title, description, url, imageUrl } = req.body
+    let song = await Song.findOne({
         where: {
-            id
+            id: songId,
         }
     })
 
@@ -139,14 +110,40 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
     song.destroy();
 })
 
-// Create a comment based on song id
-router.post('/:songId/comments', requireAuth, async (req, res, next) => {
-    // Requires Authentication
+// Create a comment for a song based on its id
+router.post('/:songId/comments', restoreUser, requireAuth, async (req, res, next) => {
+    let { id } = req.user;
+    let { songId } = req.params;
+    let { body } = req.body;
 
+    let comment = await Comment.create({ 
+        userId: id, 
+        songId, 
+        body 
+    });
+
+    comment = comment.toJSON();
+
+    return res.json(comment);
 })
 
+// Get all comments of a song by its id
+router.get('/:songId/comments', async (req, res, next) => {
+    const { songId } = req.params
+    
+    const comments = await Comment.findAll({
+        where: {
+            songId
+        }
+    })
 
+    let commentList = [];
+    comments.forEach(comment => {
+        commentList.push(comment.toJSON())
+    })
 
+    res.json(commentList);
+})
 
 
 module.exports = router;

@@ -10,23 +10,23 @@ const router = express.Router();
 // Get all albums
 router.get('/', async (req, res, next) => {
     const albums = await Album.findAll()
+
     const albumsList = [];
     albums.forEach(album => {
-        albumsList.push(toJSON(album))
+        albumsList.push(album.toJSON())
     });
+
     res.json(albumsList);
 })
 
 // Get all albums created by the user
 router.get('/current', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const userId = req.user.id
+    let { id } = req.user;
 
     const albums = await Album.findAll({
        where: {
-        attributes: {
-            userId,
-        }
+        userId: id
        }
     })
 
@@ -57,23 +57,26 @@ router.get('/artists/:artistId/albums', async (req, res, next) => {
 
 // Get details of an album by its id
 router.get('/:albumId', async (req, res, next) => {
-    const { id } = req.params.albumId
-    const album = await Album.findOne({
+    let { albumId } = req.params
+
+    let album = await Album.findOne({
         where: {
-            id
+            id: albumId
         }
     })
+
+    album = album.toJSON();
     res.json(album);
 })
 
 // Create an album
 router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { id } = req.user.id;
+    const { id } = req.user;
     const { title, description, imageUrl } = req.body;
 
     let album = await Album.create({
-        id,
+        userId: id,
         title,
         description,
         imageUrl,
@@ -87,11 +90,11 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
 // Edit an album
 router.put('/:albumId', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { id } = req.params.albumId
+    const { albumId } = req.params
     const { title, description, imageUrl } = req.body
     const album = await Album.findOne({
         where: {
-            id
+            id: albumId
         }
     })
 

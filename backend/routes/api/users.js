@@ -1,7 +1,7 @@
 const express = require('express')
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
+const { User, Album, Comment, Song, Playlist } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -37,18 +37,63 @@ const validateSignup = [
 
 // Sign up
 router.post(
-    '/',
-    validateSignup,
-    async (req, res) => {
-      const { email, password, lastName, firstName, username } = req.body;
-      const user = await User.signup({ email, firstName, lastName, username, password });
-  
-      await setTokenCookie(res, user);
-  
-      return res.json({
-        user
-      });
+  '/',
+  validateSignup,
+  async (req, res) => {
+    let { email, password, lastName, firstName, username } = req.body;
+    let user = await User.signup({ email, firstName, lastName, username, password });
+
+    let token = await setTokenCookie(res, user);
+    user = user.toJSON();
+    user.token = token;
+
+    user = {
+      id: user.id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      imageUrl: user.imageUrl,
+      token: user.token,
     }
-  );
+
+    return res.json({
+      user,
+    });
+  }
+);
+
+// Get details of an artist from an id
+router.get('/:artistId', async (req, res, next) => {
+    let { artistId } = req.params;
+
+    let artist = await User.findOne({
+        where: {
+          id: artistId
+        }
+    })
+
+    artist = artist.toJSON();
+
+    res.json(artist);
+})
+
+// Get all songs of an artist from an id
+router.get('/:artistId/songs', async (req, res, next) => {
+  const { artistId } = req.params
+  const songs = await Song.findAll({
+      where: {
+          userId: artistId
+      }
+  })
+
+  const songList = [];
+  for (let song of songs) {
+      songList.push(song.toJSON())
+  }
+
+  return res.json(songList);
+})
+
 
 module.exports = router;

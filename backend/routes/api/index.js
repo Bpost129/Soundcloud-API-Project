@@ -13,11 +13,13 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
+router.use('/artists', usersRouter);
+
 router.use('/songs', songsRouter);
 
 router.use('/albums', albumsRouter);
 
-// router.use('/comments', commentsRouter);
+router.use('/comments', commentsRouter);
 
 // router.use('/playlists', playlistsRouter);
 

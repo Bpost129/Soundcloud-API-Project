@@ -26,7 +26,7 @@ router.get(
     (req, res) => {
         const { user } = req;
         //Require Authentication
-        
+
         if (user) {
             return res.json({
                 user: user.toSafeObject()
@@ -51,12 +51,21 @@ router.post(
             err.title = 'Login failed';
             err.errors = ['The provided credentials were invalid.'];
             return next(err);
-        } 
+        }
 
         let token = await setTokenCookie(res, user);
         user = user.toJSON();
         user.token = token;
 
+        user = {
+            id: user.id,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            imageUrl: user.imageUrl,
+            token: user.token,
+        }
 
         return res.json({
             user,
