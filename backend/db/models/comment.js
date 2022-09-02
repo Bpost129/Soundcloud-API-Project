@@ -16,10 +16,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Comment.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true
-    },
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   primaryKey: true
+    // },
     songId: {
       type: DataTypes.INTEGER,
     },

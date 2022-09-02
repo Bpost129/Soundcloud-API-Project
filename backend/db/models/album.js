@@ -16,10 +16,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Album.init({
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true
-    },
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   primaryKey: true
+    // },
     userId: {
       type: DataTypes.INTEGER,
     },
