@@ -13,13 +13,15 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
-// router.use('/albums', albumsRouter);
+router.use('/songs', songsRouter);
+
+router.use('/albums', albumsRouter);
 
 // router.use('/comments', commentsRouter);
 
 // router.use('/playlists', playlistsRouter);
 
-// router.use('/songs', songsRouter);
+
 
 router.get(
   '/restore-user',
