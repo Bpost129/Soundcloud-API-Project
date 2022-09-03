@@ -63,37 +63,36 @@ router.post(
   }
 );
 
-// Get details of an artist from an id
-router.get('/:artistId', async (req, res, next) => {
-    let { artistId } = req.params;
+// // Get all songs of an artist from an id
+// router.get('/:artistId/songs', async (req, res, next) => {
+//   const { artistId } = req.params
+//   const songs = await Song.findAll({
+//       where: {
+//           userId: artistId
+//       }
+//   })
 
-    let artist = await User.findOne({
-        where: {
-          id: artistId
-        }
-    })
+//   const songList = [];
+//   for (let song of songs) {
+//       songList.push(song.toJSON())
+//   }
 
-    artist = artist.toJSON();
+//   return res.json(songList);
+// })
 
-    res.json(artist);
-})
+// // Get details of an artist from an id
+// router.get('/:artistId', async (req, res, next) => {
+//     let { artistId } = req.params;
 
-// Get all songs of an artist from an id
-router.get('/:artistId/songs', async (req, res, next) => {
-  const { artistId } = req.params
-  const songs = await Song.findAll({
-      where: {
-          userId: artistId
-      }
-  })
+//     let artist = await User.findOne({
+//         where: {
+//           id: artistId
+//         }
+//     })
 
-  const songList = [];
-  for (let song of songs) {
-      songList.push(song.toJSON())
-  }
+//     artist = artist.toJSON();
 
-  return res.json(songList);
-})
-
+//     res.json(artist);
+// })
 
 module.exports = router;

@@ -7,22 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Get all playlists of an artist from an id
-router.get('/artists/:artistId/playlists', async (req, res, next) => {
-    const { userId } = req.params.artistId
-    const playlists = await Playlist.findAll({
-        where: {
-            userId
-        }
-    })
 
-    const playlistArr = [];
-    for (let playlist of playlists) {
-        playlistArr.push(playlist.toJSON())
-    }
-
-    res.json(playlistArr);
-})
 
 // Get details of a playlist based on id
 router.get('/:playlistId', async (req, res, next) => {
@@ -38,17 +23,19 @@ router.get('/:playlistId', async (req, res, next) => {
 // Create a playlist
 router.post('/', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { title, description, imageUrl } = req.body;
+    const { id } = req.user;
+    const { name, description, imageUrl } = req.body;
 
-    const album = Album.create({
-        title,
+    const playlsit = await Playlist.create({
+        userId: id,
+        name,
         description,
         imageUrl,
     })
 
     // album[0].toJSON()
 
-    res.json(album);
+    res.json(playlist);
 })
 
 // Add a song based on playlist id
@@ -91,13 +78,11 @@ router.delete('/:playlistId', requireAuth, async (req, res, next) => {
 // Get all playlists from the current user
 router.get('/current', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const userId = req.user.id
+    const { id } = req.user;
 
     const playlists = await Playlist.findAll({
        where: {
-        attributes: {
-            userId,
-        }
+          userId: id,
        }
     })
 
