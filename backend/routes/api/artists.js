@@ -7,7 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Get details of an artist from an id
+// Get details of an artist from an id ------------------------------
 router.get('/:artistId', async (req, res, next) => {
     let { userId } = req.params;
 
@@ -17,12 +17,20 @@ router.get('/:artistId', async (req, res, next) => {
         }
     })
 
+    if (!user) {
+        res.status = 404;
+        res.json({
+            "message": "Artist couldn't be found",
+            "statusCode": 404
+        })
+    }
+
     user = user.toJSON();
 
     res.json(user);
 })
 
-// Get all songs of an artist from an id
+// Get all songs of an artist from an id ----------------------
 router.get('/:artistId/songs', async (req, res, next) => {
     const { userId } = req.params
     const user = await User.findOne({
@@ -31,19 +39,81 @@ router.get('/:artistId/songs', async (req, res, next) => {
         }
     })
 
-    user = user.toJSON();
+    if (!user) {
+        res.status = 404;
+        res.json({
+            "message": "Artist couldn't be found",
+            "statusCode": 404
+        })
+    }
 
-    // const songList = [];
-    // for (let song of songs) {
-    //     songList.push(song.toJSON())
-    // }
+    // user = user.toJSON();
 
-    return res.json(user);
+    const songs = await Song.findAll({
+        where: {
+            userId
+        }
+    })
+
+    const songList = [];
+    for (let song of songs) {
+        songList.push(song.toJSON())
+    }
+
+    return res.json(songList);
 })
 
-// Get all playlists of an artist from an id
+
+// Get all albums from an artist by id ------------------------
+router.get('/:artistId/albums', async (req, res, next) => {
+    const { userId } = req.params.artistId
+    const user = await User.findOne({
+        where: {
+            id: userId
+        }
+    })
+
+    if (!user) {
+        res.status = 404;
+        res.json({
+            "message": "Artist couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    const albums = await Album.findAll({
+        where: {
+            userId
+        }
+    })
+
+    const albumList = [];
+    for (let album of albums) {
+        albumList.push(album.toJSON())
+    }
+
+    res.json(albumList);
+})
+
+// Get all playlists of an artist from an id -----------------------
 router.get('/:artistId/playlists', async (req, res, next) => {
     const { userId } = req.params
+    const user = await User.findOne({
+        where: {
+            id: userId
+        }
+    })
+
+    if (!user) {
+        res.status = 404;
+        res.json({
+            "message": "Artist couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    // user = user.toJSON();
+
     const playlists = await Playlist.findAll({
         where: {
             userId

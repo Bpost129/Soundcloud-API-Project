@@ -7,7 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Get all albums
+// Get all albums -------------------------
 router.get('/', async (req, res, next) => {
     const albums = await Album.findAll()
 
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
     res.json(albumsList);
 })
 
-// Get all albums created by the user
+// Get all albums created by the user --------------------------
 router.get('/current', requireAuth, async (req, res, next) => {
     // Requires Authentication
     let { id } = req.user;
@@ -38,24 +38,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json(albumList);
 })
 
-// Get all albums from an artist by id
-router.get('/artists/:artistId/albums', async (req, res, next) => {
-    const { userId } = req.params.artistId
-    const albums = await Album.findAll({
-        where: {
-            userId
-        }
-    })
-
-    const albumList = [];
-    for (let album of albums) {
-        albumList.push(album.toJSON())
-    }
-
-    res.json(albumList);
-})
-
-// Get details of an album by its id
+// Get details of an album by its id ------------------------
 router.get('/:albumId', async (req, res, next) => {
     let { albumId } = req.params
 
@@ -65,15 +48,34 @@ router.get('/:albumId', async (req, res, next) => {
         }
     })
 
+    if (!album) {
+        res.status = 404;
+        res.json({
+          "message": "Album couldn't be found",
+          "statusCode": 404
+        })
+    }
+
     album = album.toJSON();
     res.json(album);
 })
 
-// Create an album
+// Create an album --------------------------------
 router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
     const { id } = req.user;
     const { title, description, imageUrl } = req.body;
+
+    if (!title) {
+        res.status = 400;
+        res.json({
+          "message": "Validation error",
+          "statusCode": 400,
+          "errors": {
+            "title": "Album title is required"
+          }
+        })
+    }
 
     let album = await Album.create({
         userId: id,
@@ -87,7 +89,7 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     res.json(album);
 })
 
-// Edit an album
+// Edit an album ----------------------------
 router.put('/:albumId', requireAuth, async (req, res, next) => {
     // Requires Authentication
     const { albumId } = req.params
@@ -98,6 +100,25 @@ router.put('/:albumId', requireAuth, async (req, res, next) => {
         }
     })
 
+    if (!title) {
+        res.status = 400;
+        res.json({
+          "message": "Validation error",
+          "statusCode": 400,
+          "errors": {
+            "title": "Album title is required"
+          }
+        })
+    }
+
+    if (!album) {
+        res.status = 404;
+        res.json({
+          "message": "Album couldn't be found",
+          "statusCode": 404
+        })
+    }
+
     album.title = title;
     album.description = description;
     album.imageUrl = imageUrl;
@@ -105,7 +126,7 @@ router.put('/:albumId', requireAuth, async (req, res, next) => {
     res.json(album);
 })
 
-// Delete an album
+// Delete an album ------------------------------
 router.delete('/:albumId', requireAuth, async (req, res, next) => {
     // Requires Authentication
     const { id } = req.params.albumId;
@@ -115,8 +136,19 @@ router.delete('/:albumId', requireAuth, async (req, res, next) => {
         }
     })
 
-    album.destroy();
+    if (!album) {
+        res.status = 404;
+        res.json({
+          "message": "Album couldn't be found",
+          "statusCode": 404
+        })
+    }
 
+    album.destroy();
+    res.json({
+        "message": "Succefully deleted",
+        "statusCode": 200
+    })
 })
 
 

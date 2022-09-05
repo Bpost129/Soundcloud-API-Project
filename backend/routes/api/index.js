@@ -22,7 +22,7 @@ router.use('/albums', albumsRouter);
 
 router.use('/comments', commentsRouter);
 
-// router.use('/playlists', playlistsRouter);
+router.use('/playlists', playlistsRouter);
 
 
 

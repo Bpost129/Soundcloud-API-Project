@@ -8,19 +8,52 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 
-// Get all songs
+// Get all songs -----------------
 router.get('/', async (req, res, next) => {
-    const songs = await Song.findAll()
+    let { size, page } = req.query;
+    if (!size) size = 1;
+    if (!page) page = 1;
+
+    let pagination = {};
+    size = parseInt(size);
+    page = parseInt(page);
+
+    if (size >= 1 && page >= 1) {
+        pagination.limit = size
+        pagination.offset = size * (page - 1);
+    }
+    
+    if (page < 0 || size < 0) {
+        res.status = 400;
+        res.json({
+          "message": "Validation error",
+          "statusCode": 400,
+          "errors": {
+            "page": "Page must be greater than or equal to 0",
+            "size": "Size must be greater than or equal to 0",
+            "createdAt": "CreatedAt is invalid"
+          }
+        })
+    }
+
+    const songs = await Song.findAll({
+        ...pagination
+    })
 
     const songList = [];
     for (let song of songs) {
         songList.push(song.toJSON())
     }
 
-    return res.json(songs);
+    res.status(200)
+    return res.json({
+        songs,
+        page,
+        size
+    });
 })
 
-// Get all songs created by the current user
+// Get all songs created by the current user --------------------
 router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
     let { id } = req.user;
@@ -39,7 +72,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
     return res.json(songList);
 })
 
-// Get details of a song from an id
+// Get details of a song from its id --------------------
 router.get('/:songId', async (req, res, next) => {
     let { songId } = req.params
     
@@ -49,22 +82,52 @@ router.get('/:songId', async (req, res, next) => {
         }
     })
 
+    if (!song) {
+        res.status = 404;
+        res.json({
+          "message": "Song couldn't be found",
+          "statusCode": 404
+        })
+    }
+
     song = song.toJSON();
     return res.json(song);
 })
 
-// Create a song
+// Create a song -------------------
 router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
     let { id } = req.user;
-    // let { albumId } = req.album.id;
+    
     const { title, description, url, imageUrl, albumId } = req.body;
 
-    // albumId = parseInt(albumId);
+    let album = await Album.findOne({
+        where: {
+            id: albumId
+        }
+    })
+
+    if (!album) {
+        res.status = 404;
+        res.json({
+          "message": "Album couldn't be found",
+          "statusCode": 404
+        })
+    }
+
+    if (!title || !url) {
+        res.status = 400;
+        res.json({
+          "message": "Validation error",
+          "statusCode": 400,
+          "errors": {
+            "title": "Song title is required",
+            "url": "Audio is required"
+          }
+        })
+    }
 
     let song = await Song.create({
-        // albumId: id,
-        // albumId,
         userId: id,
         albumId,
         title,
@@ -78,7 +141,7 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     res.json(song);
 })
 
-// Edit a song
+// Edit a song -----------------------
 router.put('/:songId', requireAuth, async (req, res, next) => {
     // Requires Authentication
     let { songId } = req.params
@@ -89,6 +152,26 @@ router.put('/:songId', requireAuth, async (req, res, next) => {
         }
     })
 
+    if (!song) {
+        res.status = 400;
+        res.json({
+          "message": "Song couldn't be found",
+          "statusCode": 404
+        })
+    }
+
+    if (!title || !url) {
+        res.status = 400;
+        res.json({
+          "message": "Validation error",
+          "statusCode": 400,
+          "errors": {
+            "title": "Song title is required",
+            "url": "Audio is required"
+          }
+        })
+    }
+
     song.title = title;
     song.description = description;
     song.url = url;
@@ -97,7 +180,7 @@ router.put('/:songId', requireAuth, async (req, res, next) => {
     res.json(song);
 })
 
-// Delete a song
+// Delete a song -----------------------
 router.delete('/:songId', requireAuth, async (req, res, next) => {
     // Requires Authentication
     const { id } = req.params.songId;
@@ -107,14 +190,51 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
         }
     })
 
+    if (!song) {
+        res.status = 404;
+        res.json({
+          "message": "Song couldn't be found",
+          "statusCode": 404
+        })
+    }
+
     song.destroy();
+    res.json({
+        "message": "Succefully deleted",
+        "statusCode": 200
+    })
 })
 
-// Create a comment for a song based on its id
+// Create a comment for a song based on its id --------------------------------
 router.post('/:songId/comments', restoreUser, requireAuth, async (req, res, next) => {
     let { id } = req.user;
     let { songId } = req.params;
     let { body } = req.body;
+
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        }
+    })
+
+    if (!song) {
+        res.status = 404;
+        res.json({
+          "message": "Song couldn't be found",
+          "statusCode": 404
+        })
+    }
+
+    if (!body) {
+        res.status = 400;
+        res.json({
+          "message": "Validation error",
+          "statusCode": 400,
+          "errors": {
+            "body": "Comment body text is required"
+          }
+        })
+    }
 
     let comment = await Comment.create({ 
         userId: id, 
@@ -127,10 +247,24 @@ router.post('/:songId/comments', restoreUser, requireAuth, async (req, res, next
     return res.json(comment);
 })
 
-// Get all comments of a song by its id
+// Get all comments of a song by its id ----------------------------
 router.get('/:songId/comments', async (req, res, next) => {
     const { songId } = req.params
     
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        }
+    })
+
+    if (!song) {
+        res.status = 404;
+        res.json({
+          "message": "Song couldn't be found",
+          "statusCode": 404
+        })
+    }
+
     const comments = await Comment.findAll({
         where: {
             songId

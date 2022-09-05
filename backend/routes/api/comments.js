@@ -7,7 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Edit a comment
+// Edit a comment --------------------------
 router.put('/:commentId', requireAuth, async (req, res, next) => {
     // Requires Authentication
     const { commentId } = req.params
@@ -19,12 +19,23 @@ router.put('/:commentId', requireAuth, async (req, res, next) => {
         }
     })
 
+    if (!body) {
+        res.status = 400;
+        res.json({
+          "message": "Validation error",
+          "statusCode": 400,
+          "errors": {
+            "body": "Comment body text is required"
+          }
+        })
+    }
+
     comment.body = body;
 
     res.json(comment);
 })
 
-// Delete a comment
+// Delete a comment -------------------------
 router.delete('/:commentId', requireAuth, async (req, res, next) => {
     // Requires Authentication
     const { commentId } = req.params
@@ -34,10 +45,18 @@ router.delete('/:commentId', requireAuth, async (req, res, next) => {
         }
     })
 
+    if (!comment) {
+        res.status = 404;
+        res.json({
+          "message": "Comment couldn't be found",
+          "statusCode": 404
+        })
+    }
+
     comment.destroy();
     res.json({
-        message: "Succefully deleted",
-        status: 200
+        "message": "Succefully deleted",
+        "statusCode": 200
     })
 })
 
