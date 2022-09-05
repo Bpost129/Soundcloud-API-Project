@@ -7,75 +7,84 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+// Create a comment for a song based on its id --------------------------------
+router.post('/:songId/comments', restoreUser, requireAuth, async (req, res, next) => {
+    let { id } = req.user;
+    let { songId } = req.params;
+    let { body } = req.body;
 
-// Get all songs -----------------
-router.get('/', async (req, res, next) => {
-    let { size, page } = req.query;
-    if (!size) size = 1;
-    if (!page) page = 1;
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        }
+    })
 
-    let pagination = {};
-    size = parseInt(size);
-    page = parseInt(page);
-
-    if (size >= 1 && page >= 1) {
-        pagination.limit = size
-        pagination.offset = size * (page - 1);
-    }
-    
-    if (page < 0 || size < 0) {
-        res.status = 400;
+    if (!song) {
+        res.status = 404;
         res.json({
-          "message": "Validation error",
-          "statusCode": 400,
-          "errors": {
-            "page": "Page must be greater than or equal to 0",
-            "size": "Size must be greater than or equal to 0",
-            "createdAt": "CreatedAt is invalid"
-          }
+            "message": "Song couldn't be found",
+            "statusCode": 404
         })
     }
 
-    const songs = await Song.findAll({
-        ...pagination
-    })
-
-    const songList = [];
-    for (let song of songs) {
-        songList.push(song.toJSON())
+    if (!body) {
+        res.status = 400;
+        res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "body": "Comment body text is required"
+            }
+        })
     }
 
-    res.status(200)
-    return res.json({
-        songs,
-        page,
-        size
+    let comment = await Comment.create({
+        userId: id,
+        songId,
+        body
     });
+
+    comment = comment.toJSON();
+
+    return res.json(comment);
 })
 
-// Get all songs created by the current user --------------------
-router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    let { id } = req.user;
+// Get all comments of a song by its id ----------------------------
+router.get('/:songId/comments', async (req, res, next) => {
+    const { songId } = req.params
 
-    let songs = await Song.findAll({
-       where: {
-        userId: id,
-       }
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        }
     })
 
-    let songList = [];
-    for (let song of songs) {
-        songList.push(song.toJSON())
+    if (!song) {
+        res.status = 404;
+        res.json({
+            "message": "Song couldn't be found",
+            "statusCode": 404
+        })
     }
 
-    return res.json(songList);
+    const comments = await Comment.findAll({
+        where: {
+            songId
+        }
+    })
+
+    let commentList = [];
+    comments.forEach(comment => {
+        commentList.push(comment.toJSON())
+    })
+
+    res.json(commentList);
 })
 
 // Get details of a song from its id --------------------
 router.get('/:songId', async (req, res, next) => {
     let { songId } = req.params
-    
+
     let song = await Song.findOne({
         where: {
             id: songId,
@@ -85,60 +94,13 @@ router.get('/:songId', async (req, res, next) => {
     if (!song) {
         res.status = 404;
         res.json({
-          "message": "Song couldn't be found",
-          "statusCode": 404
+            "message": "Song couldn't be found",
+            "statusCode": 404
         })
     }
 
     song = song.toJSON();
     return res.json(song);
-})
-
-// Create a song -------------------
-router.post('/', restoreUser, requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    let { id } = req.user;
-    
-    const { title, description, url, imageUrl, albumId } = req.body;
-
-    let album = await Album.findOne({
-        where: {
-            id: albumId
-        }
-    })
-
-    if (!album) {
-        res.status = 404;
-        res.json({
-          "message": "Album couldn't be found",
-          "statusCode": 404
-        })
-    }
-
-    if (!title || !url) {
-        res.status = 400;
-        res.json({
-          "message": "Validation error",
-          "statusCode": 400,
-          "errors": {
-            "title": "Song title is required",
-            "url": "Audio is required"
-          }
-        })
-    }
-
-    let song = await Song.create({
-        userId: id,
-        albumId,
-        title,
-        description,
-        url,
-        imageUrl,
-    })
-
-    song = song.toJSON();
-
-    res.json(song);
 })
 
 // Edit a song -----------------------
@@ -155,20 +117,20 @@ router.put('/:songId', requireAuth, async (req, res, next) => {
     if (!song) {
         res.status = 400;
         res.json({
-          "message": "Song couldn't be found",
-          "statusCode": 404
+            "message": "Song couldn't be found",
+            "statusCode": 404
         })
     }
 
     if (!title || !url) {
         res.status = 400;
         res.json({
-          "message": "Validation error",
-          "statusCode": 400,
-          "errors": {
-            "title": "Song title is required",
-            "url": "Audio is required"
-          }
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "title": "Song title is required",
+                "url": "Audio is required"
+            }
         })
     }
 
@@ -193,8 +155,8 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
     if (!song) {
         res.status = 404;
         res.json({
-          "message": "Song couldn't be found",
-          "statusCode": 404
+            "message": "Song couldn't be found",
+            "statusCode": 404
         })
     }
 
@@ -205,79 +167,115 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
     })
 })
 
-// Create a comment for a song based on its id --------------------------------
-router.post('/:songId/comments', restoreUser, requireAuth, async (req, res, next) => {
+// Get all songs created by the current user --------------------
+router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
+    // Requires Authentication
     let { id } = req.user;
-    let { songId } = req.params;
-    let { body } = req.body;
 
-    const song = await Song.findOne({
+    let songs = await Song.findAll({
         where: {
-            id: songId
+            userId: id,
         }
     })
 
-    if (!song) {
-        res.status = 404;
-        res.json({
-          "message": "Song couldn't be found",
-          "statusCode": 404
-        })
+    let songList = [];
+    for (let song of songs) {
+        songList.push(song.toJSON())
     }
 
-    if (!body) {
+    return res.json(songList);
+})
+
+// Get all songs ----------------- **
+router.get('/', async (req, res, next) => {
+    let { size, page } = req.query;
+    if (!size) size = 1;
+    if (!page) page = 1;
+
+    let pagination = {};
+    size = parseInt(size);
+    page = parseInt(page);
+
+    if (size >= 1 && page >= 1) {
+        pagination.limit = size
+        pagination.offset = size * (page - 1);
+    }
+
+    if (page < 0 || size < 0) {
         res.status = 400;
         res.json({
-          "message": "Validation error",
-          "statusCode": 400,
-          "errors": {
-            "body": "Comment body text is required"
-          }
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "page": "Page must be greater than or equal to 0",
+                "size": "Size must be greater than or equal to 0",
+                "createdAt": "CreatedAt is invalid"
+            }
         })
     }
 
-    let comment = await Comment.create({ 
-        userId: id, 
-        songId, 
-        body 
+    const songs = await Song.findAll({
+        ...pagination
+    })
+
+    const songList = [];
+    for (let song of songs) {
+        songList.push(song.toJSON())
+    }
+
+    res.status(200)
+    return res.json({
+        songs,
+        page,
+        size
     });
-
-    comment = comment.toJSON();
-
-    return res.json(comment);
 })
 
-// Get all comments of a song by its id ----------------------------
-router.get('/:songId/comments', async (req, res, next) => {
-    const { songId } = req.params
-    
-    const song = await Song.findOne({
+// Create a song ------------------- **
+router.post('/', restoreUser, requireAuth, async (req, res, next) => {
+    // Requires Authentication
+    let { id } = req.user;
+
+    const { title, description, url, imageUrl, albumId } = req.body;
+
+    let album = await Album.findOne({
         where: {
-            id: songId
+            id: albumId
         }
     })
 
-    if (!song) {
+    if (!album) {
         res.status = 404;
         res.json({
-          "message": "Song couldn't be found",
-          "statusCode": 404
+            "message": "Album couldn't be found",
+            "statusCode": 404
         })
     }
 
-    const comments = await Comment.findAll({
-        where: {
-            songId
-        }
+    if (!title || !url) {
+        res.status = 400;
+        res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "title": "Song title is required",
+                "url": "Audio is required"
+            }
+        })
+    }
+
+    let song = await Song.create({
+        userId: id,
+        albumId,
+        title,
+        description,
+        url,
+        imageUrl,
     })
 
-    let commentList = [];
-    comments.forEach(comment => {
-        commentList.push(comment.toJSON())
-    })
+    song = song.toJSON();
 
-    res.json(commentList);
+    res.json(song);
 })
-
 
 module.exports = router;

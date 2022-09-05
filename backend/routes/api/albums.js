@@ -7,37 +7,6 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Get all albums -------------------------
-router.get('/', async (req, res, next) => {
-    const albums = await Album.findAll()
-
-    const albumsList = [];
-    albums.forEach(album => {
-        albumsList.push(album.toJSON())
-    });
-
-    res.json(albumsList);
-})
-
-// Get all albums created by the user --------------------------
-router.get('/current', requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    let { id } = req.user;
-
-    const albums = await Album.findAll({
-       where: {
-        userId: id
-       }
-    })
-
-    const albumList = [];
-    for (let album of albums) {
-        albumList.push(album.toJSON())
-    }
-
-    res.json(albumList);
-})
-
 // Get details of an album by its id ------------------------
 router.get('/:albumId', async (req, res, next) => {
     let { albumId } = req.params
@@ -51,41 +20,12 @@ router.get('/:albumId', async (req, res, next) => {
     if (!album) {
         res.status = 404;
         res.json({
-          "message": "Album couldn't be found",
-          "statusCode": 404
+            "message": "Album couldn't be found",
+            "statusCode": 404
         })
     }
 
     album = album.toJSON();
-    res.json(album);
-})
-
-// Create an album --------------------------------
-router.post('/', restoreUser, requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    const { id } = req.user;
-    const { title, description, imageUrl } = req.body;
-
-    if (!title) {
-        res.status = 400;
-        res.json({
-          "message": "Validation error",
-          "statusCode": 400,
-          "errors": {
-            "title": "Album title is required"
-          }
-        })
-    }
-
-    let album = await Album.create({
-        userId: id,
-        title,
-        description,
-        imageUrl,
-    })
-    album = album.toJSON();
-    // album[0].toJSON()
-
     res.json(album);
 })
 
@@ -103,19 +43,19 @@ router.put('/:albumId', requireAuth, async (req, res, next) => {
     if (!title) {
         res.status = 400;
         res.json({
-          "message": "Validation error",
-          "statusCode": 400,
-          "errors": {
-            "title": "Album title is required"
-          }
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "title": "Album title is required"
+            }
         })
     }
 
     if (!album) {
         res.status = 404;
         res.json({
-          "message": "Album couldn't be found",
-          "statusCode": 404
+            "message": "Album couldn't be found",
+            "statusCode": 404
         })
     }
 
@@ -139,8 +79,8 @@ router.delete('/:albumId', requireAuth, async (req, res, next) => {
     if (!album) {
         res.status = 404;
         res.json({
-          "message": "Album couldn't be found",
-          "statusCode": 404
+            "message": "Album couldn't be found",
+            "statusCode": 404
         })
     }
 
@@ -151,7 +91,64 @@ router.delete('/:albumId', requireAuth, async (req, res, next) => {
     })
 })
 
+// Get all albums created by the user --------------------------
+router.get('/current', requireAuth, async (req, res, next) => {
+    // Requires Authentication
+    let { id } = req.user;
 
+    const albums = await Album.findAll({
+        where: {
+            userId: id
+        }
+    })
 
+    const albumList = [];
+    for (let album of albums) {
+        albumList.push(album.toJSON())
+    }
+
+    res.json(albumList);
+})
+
+// Get all albums -------------------------
+router.get('/', async (req, res, next) => {
+    const albums = await Album.findAll()
+
+    const albumsList = [];
+    albums.forEach(album => {
+        albumsList.push(album.toJSON())
+    });
+
+    res.json(albumsList);
+})
+
+// Create an album --------------------------------
+router.post('/', restoreUser, requireAuth, async (req, res, next) => {
+    // Requires Authentication
+    const { id } = req.user;
+    const { title, description, imageUrl } = req.body;
+
+    if (!title) {
+        res.status = 400;
+        res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "title": "Album title is required"
+            }
+        })
+    }
+
+    let album = await Album.create({
+        userId: id,
+        title,
+        description,
+        imageUrl,
+    })
+    album = album.toJSON();
+    // album[0].toJSON()
+
+    res.json(album);
+})
 
 module.exports = router;

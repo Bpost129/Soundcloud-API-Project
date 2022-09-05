@@ -35,7 +35,6 @@ router.get(
     }
 );
 
-
 // Login -------------------
 router.post(
     '/',

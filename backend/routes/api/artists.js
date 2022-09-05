@@ -7,29 +7,6 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Get details of an artist from an id ------------------------------
-router.get('/:artistId', async (req, res, next) => {
-    let { userId } = req.params;
-
-    let user = await User.findOne({
-        where: {
-            id: userId
-        }
-    })
-
-    if (!user) {
-        res.status = 404;
-        res.json({
-            "message": "Artist couldn't be found",
-            "statusCode": 404
-        })
-    }
-
-    user = user.toJSON();
-
-    res.json(user);
-})
-
 // Get all songs of an artist from an id ----------------------
 router.get('/:artistId/songs', async (req, res, next) => {
     const { userId } = req.params
@@ -128,5 +105,27 @@ router.get('/:artistId/playlists', async (req, res, next) => {
     res.json(playlistArr);
 })
 
+// Get details of an artist from an id ------------------------------ ** whole router
+router.get('/:artistId', async (req, res, next) => {
+    let { userId } = req.params;
+
+    let user = await User.findOne({
+        where: {
+            id: userId
+        }
+    })
+
+    if (!user) {
+        res.status = 404;
+        res.json({
+            "message": "Artist couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    user = user.toJSON();
+
+    res.json(user);
+})
 
 module.exports = router;

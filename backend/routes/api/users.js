@@ -35,7 +35,7 @@ const validateSignup = [
   handleValidationErrors
 ];
 
-// Sign up ---------------------
+// Sign up --------------------- **
 router.post(
   '/',
   validateSignup,
@@ -43,19 +43,19 @@ router.post(
     let { email, password, lastName, firstName, username } = req.body;
     let user = await User.signup({ email, firstName, lastName, username, password });
 
-    let emailUsers = User.findAll({
+    let emailUser = await User.findOne({
       where: {
         email
       }
     })
 
-    let nameUsers = User.findAll({
+    let nameUser = await User.findOne({
       where: {
         username
       }
     })
 
-    if (emailUsers.length) {
+    if (emailUser) {
       res.status = 403;
       res.json({
         "message": "User already exists",
@@ -66,7 +66,7 @@ router.post(
       })
     }
 
-    if (nameUsers.length) {
+    if (nameUser) {
       res.status = 403;
       res.json({
         "message": "User already exists",
@@ -111,37 +111,5 @@ router.post(
     });
   }
 );
-
-// // Get all songs of an artist from an id
-// router.get('/:artistId/songs', async (req, res, next) => {
-//   const { artistId } = req.params
-//   const songs = await Song.findAll({
-//       where: {
-//           userId: artistId
-//       }
-//   })
-
-//   const songList = [];
-//   for (let song of songs) {
-//       songList.push(song.toJSON())
-//   }
-
-//   return res.json(songList);
-// })
-
-// // Get details of an artist from an id
-// router.get('/:artistId', async (req, res, next) => {
-//     let { artistId } = req.params;
-
-//     let artist = await User.findOne({
-//         where: {
-//           id: artistId
-//         }
-//     })
-
-//     artist = artist.toJSON();
-
-//     res.json(artist);
-// })
 
 module.exports = router;

@@ -7,57 +7,6 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-
-
-// Get details of a playlist based on id --------------------------
-router.get('/:playlistId', async (req, res, next) => {
-    const { id } = req.params
-    const playlist = await Playlist.findOne({
-        where: {
-            id
-        }
-    })
-
-    if (!playlist) {
-        res.status = 404;
-        res.json({
-            "message": "Playlist couldn't be found",
-            "statusCode": 404
-        })
-    }
-
-    res.json(playlist);
-})
-
-// Create a playlist --------------------------
-router.post('/', requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    const { id } = req.user;
-    const { name, description, imageUrl } = req.body;
-
-    if (!name) {
-        res.status = 400;
-        res.json({
-            "message": "Validation error",
-            "statusCode": 400,
-            "errors": {
-                "name": "Playlist name is required"
-            }
-        })
-    }
-
-    const playlist = await Playlist.create({
-        userId: id,
-        name,
-        description,
-        imageUrl,
-    })
-
-    // album[0].toJSON()
-
-    res.json(playlist);
-})
-
 // Add a song based on playlist id ------------------------------
 router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
     // Requires Authentication
@@ -97,6 +46,26 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
             id: songId
         }
     })
+
+    res.json(playlist);
+})
+
+// Get details of a playlist based on id -------------------------- ** whole router
+router.get('/:playlistId', async (req, res, next) => {
+    const { id } = req.params
+    const playlist = await Playlist.findOne({
+        where: {
+            id
+        }
+    })
+
+    if (!playlist) {
+        res.status = 404;
+        res.json({
+            "message": "Playlist couldn't be found",
+            "statusCode": 404
+        })
+    }
 
     res.json(playlist);
 })
@@ -150,8 +119,8 @@ router.delete('/:playlistId', requireAuth, async (req, res, next) => {
     if (!playlist) {
         res.status = 404;
         res.json({
-          "message": "Playlist couldn't be found",
-          "statusCode": 404
+            "message": "Playlist couldn't be found",
+            "statusCode": 404
         })
     }
 
@@ -181,6 +150,33 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json(playlistArr);
 })
 
+// Create a playlist --------------------------
+router.post('/', requireAuth, async (req, res, next) => {
+    // Requires Authentication
+    const { id } = req.user;
+    const { name, description, imageUrl } = req.body;
 
+    if (!name) {
+        res.status = 400;
+        res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "name": "Playlist name is required"
+            }
+        })
+    }
+
+    const playlist = await Playlist.create({
+        userId: id,
+        name,
+        description,
+        imageUrl,
+    })
+
+    // album[0].toJSON()
+
+    res.json(playlist);
+})
 
 module.exports = router;

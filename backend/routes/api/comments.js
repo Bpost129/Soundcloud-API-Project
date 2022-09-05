@@ -7,12 +7,12 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Edit a comment --------------------------
+// Edit a comment -------------------------- **
 router.put('/:commentId', requireAuth, async (req, res, next) => {
     // Requires Authentication
     const { commentId } = req.params
     const { body } = req.body
-    
+
     const comment = await Comment.findOne({
         where: {
             id: commentId
@@ -22,11 +22,11 @@ router.put('/:commentId', requireAuth, async (req, res, next) => {
     if (!body) {
         res.status = 400;
         res.json({
-          "message": "Validation error",
-          "statusCode": 400,
-          "errors": {
-            "body": "Comment body text is required"
-          }
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "body": "Comment body text is required"
+            }
         })
     }
 
@@ -48,8 +48,8 @@ router.delete('/:commentId', requireAuth, async (req, res, next) => {
     if (!comment) {
         res.status = 404;
         res.json({
-          "message": "Comment couldn't be found",
-          "statusCode": 404
+            "message": "Comment couldn't be found",
+            "statusCode": 404
         })
     }
 
@@ -59,7 +59,5 @@ router.delete('/:commentId', requireAuth, async (req, res, next) => {
         "statusCode": 200
     })
 })
-
-
 
 module.exports = router;
