@@ -190,7 +190,7 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
 
 
 
-// Get all songs ----------------- **
+// Get all songs ----------------- ***
 router.get('/', async (req, res, next) => {
     let { size, page } = req.query;
     if (!size) size = 1;
@@ -227,7 +227,7 @@ router.get('/', async (req, res, next) => {
         songList.push(song.toJSON())
     }
 
-    res.status(200)
+    
     return res.json({
         songs,
         page,
@@ -235,7 +235,7 @@ router.get('/', async (req, res, next) => {
     });
 })
 
-// Create a song ------------------- **
+// Create a song ------------------- ***
 router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
     let { id } = req.user;
@@ -248,7 +248,7 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
         }
     })
 
-    if (!album) {
+    if (!album && albumId) {
         res.status = 404;
         res.json({
             "message": "Album couldn't be found",
@@ -276,6 +276,7 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
         url,
         imageUrl,
     })
+
 
     song = song.toJSON();
 
