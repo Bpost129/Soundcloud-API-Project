@@ -109,6 +109,8 @@ router.get('/:artistId/playlists', async (req, res, next) => {
 router.get('/:artistId', restoreUser, async (req, res, next) => {
     let { artistId } = req.params;
 
+    console.log(artistId);
+
     let user = await User.findOne({
         where:{
             id: artistId

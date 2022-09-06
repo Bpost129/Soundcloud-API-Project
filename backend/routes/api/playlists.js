@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Album, Song, User, Comment, Playlist } = require('../../db/models');
+const { Album, Song, User, Comment, Playlist, PlaylistSong } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -10,13 +10,22 @@ const router = express.Router();
 // Add a song based on playlist id ------------------------------
 router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { id } = req.params.playlistId;
+    const { playlistId } = req.params
     let { songId } = req.body;
-    // let id = playlistId.toJSON();
+    // let playlistId = playlistId.toJSON();
     // playlistId = playlistId.toJSON();
     // console.log(playlistId)
 
-    let playlist = await Playlist.findByPk(id, {})
+    let playlist = await Playlist.findByPk(playlistId, {
+        // include: [
+        //     {
+        //         model: Song
+        //     }
+        // ]
+    })
+
+    await playlist.addSongs(songId)
+
 
     let song = await Song.findByPk(songId, {})
 
@@ -36,15 +45,9 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
         })
     }
 
-    playlist.addSong({
-        where: {
-            id: songId
-        }
-    })
-
     res.json({
         playlist,
-        song
+        // song
     });
 })
 
@@ -74,7 +77,15 @@ router.get('/:playlistId', async (req, res, next) => {
     const { playlistId } = req.params
     const playlist = await Playlist.findByPk(playlistId, {
         include: [
-            {model:  Song },
+            {
+                model: Song, 
+                through: 'songId',
+                exclude: [
+                    {
+                        model: PlaylistSong
+                    }
+                ]
+            },
         ]
     })
 
