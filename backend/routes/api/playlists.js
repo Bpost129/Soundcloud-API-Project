@@ -16,18 +16,17 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
     // playlistId = playlistId.toJSON();
     // console.log(playlistId)
 
-    let playlist = await Playlist.findByPk(id, {
-        // include: [
-        //     {
-        //         model: Song
-        //     }
-        // ]
-    })
+    let playlist = await Playlist.findByPk(id, {})
 
-    await playlist.addSong(songId, )
+    if (playlist) {
+        let plsong = await PlaylistSong.create({
+            playlistId: id,
+            songId
+        })
+    }
 
 
-    let song = await Song.findByPk(songId, {through: PlaylistSong})
+    let song = await Song.findByPk(songId, {})
 
     if (!playlist) {
         res.status = 404;
