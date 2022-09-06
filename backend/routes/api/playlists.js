@@ -24,10 +24,10 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
         // ]
     })
 
-    await playlist.addSong(songId)
+    await playlist.addSong(songId, )
 
 
-    let song = await Song.findByPk(songId, {})
+    let song = await Song.findByPk(songId, {through: PlaylistSong})
 
     if (!playlist) {
         res.status = 404;
