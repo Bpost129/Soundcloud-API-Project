@@ -76,11 +76,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
 router.get('/:playlistId', async (req, res, next) => {
     const { playlistId } = req.params
     const playlist = await Playlist.findByPk(playlistId, {
-        include: [
-            {
-                model: PlaylistSong,
-            },
-        ]
+        include: Song
     })
 
     if (!playlist) {
