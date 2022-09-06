@@ -72,7 +72,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
     res.json(playlistArr);
 })
 
-// Get details of a playlist based on id -------------------------- ** whole router
+// Get details of a playlist based on id -------------------------- ** 
 router.get('/:playlistId', async (req, res, next) => {
     const { playlistId } = req.params
     const playlist = await Playlist.findByPk(playlistId, {
