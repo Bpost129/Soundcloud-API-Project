@@ -30,6 +30,15 @@ router.put('/:commentId', requireAuth, async (req, res, next) => {
         })
     }
 
+    if (!comment) {
+        res.status = 404;
+        res.json({
+            "message": "Comment couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    body = body.toJSON();
     comment.body = body;
 
     res.json(comment);

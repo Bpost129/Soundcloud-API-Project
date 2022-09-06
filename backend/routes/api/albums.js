@@ -7,6 +7,25 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+// Get all albums created by the user --------------------------
+router.get('/current', requireAuth, async (req, res, next) => {
+    // Requires Authentication
+    let { id } = req.user;
+
+    const albums = await Album.findAll({
+        where: {
+            userId: id
+        }
+    })
+
+    const albumList = [];
+    for (let album of albums) {
+        albumList.push(album.toJSON())
+    }
+
+    res.json(albumList);
+})
+
 // Get details of an album by its id ------------------------
 router.get('/:albumId', async (req, res, next) => {
     let { albumId } = req.params
@@ -28,6 +47,8 @@ router.get('/:albumId', async (req, res, next) => {
     album = album.toJSON();
     res.json(album);
 })
+
+
 
 // Edit an album ----------------------------
 router.put('/:albumId', requireAuth, async (req, res, next) => {
@@ -69,10 +90,10 @@ router.put('/:albumId', requireAuth, async (req, res, next) => {
 // Delete an album ------------------------------
 router.delete('/:albumId', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { id } = req.params.albumId;
+    const { albumId } = req.params;
     const album = await Album.findOne({
         where: {
-            id
+            id: albumId
         }
     })
 
@@ -91,24 +112,7 @@ router.delete('/:albumId', requireAuth, async (req, res, next) => {
     })
 })
 
-// Get all albums created by the user --------------------------
-router.get('/current', requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    let { id } = req.user;
 
-    const albums = await Album.findAll({
-        where: {
-            userId: id
-        }
-    })
-
-    const albumList = [];
-    for (let album of albums) {
-        albumList.push(album.toJSON())
-    }
-
-    res.json(albumList);
-})
 
 // Get all albums -------------------------
 router.get('/', async (req, res, next) => {

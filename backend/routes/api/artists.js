@@ -9,10 +9,10 @@ const router = express.Router();
 
 // Get all songs of an artist from an id ----------------------
 router.get('/:artistId/songs', async (req, res, next) => {
-    const { userId } = req.params
+    const { artistId } = req.params
     const user = await User.findOne({
         where: {
-            id: userId
+            id: artistId
         }
     })
 
@@ -28,7 +28,7 @@ router.get('/:artistId/songs', async (req, res, next) => {
 
     const songs = await Song.findAll({
         where: {
-            userId
+            userId: artistId
         }
     })
 
@@ -43,10 +43,10 @@ router.get('/:artistId/songs', async (req, res, next) => {
 
 // Get all albums from an artist by id ------------------------
 router.get('/:artistId/albums', async (req, res, next) => {
-    const { userId } = req.params.artistId
+    const { artistId } = req.params
     const user = await User.findOne({
         where: {
-            id: userId
+            id: artistId
         }
     })
 
@@ -60,7 +60,7 @@ router.get('/:artistId/albums', async (req, res, next) => {
 
     const albums = await Album.findAll({
         where: {
-            userId
+            userId: artistId
         }
     })
 
@@ -74,10 +74,10 @@ router.get('/:artistId/albums', async (req, res, next) => {
 
 // Get all playlists of an artist from an id -----------------------
 router.get('/:artistId/playlists', async (req, res, next) => {
-    const { userId } = req.params
+    const { artistId } = req.params
     const user = await User.findOne({
         where: {
-            id: userId
+            id: artistId
         }
     })
 
@@ -93,7 +93,7 @@ router.get('/:artistId/playlists', async (req, res, next) => {
 
     const playlists = await Playlist.findAll({
         where: {
-            userId
+            userId: artistId
         }
     })
 
@@ -107,12 +107,13 @@ router.get('/:artistId/playlists', async (req, res, next) => {
 
 // Get details of an artist from an id ------------------------------ ** whole router
 router.get('/:artistId', async (req, res, next) => {
-    let { userId } = req.params;
+    let { artistId } = req.params;
 
     let user = await User.findOne({
         where: {
-            id: userId
-        }
+            id: artistId,
+        },
+    
     })
 
     if (!user) {

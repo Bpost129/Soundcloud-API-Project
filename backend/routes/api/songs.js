@@ -81,6 +81,27 @@ router.get('/:songId/comments', async (req, res, next) => {
     res.json(commentList);
 })
 
+// Get all songs created by the current user -------------------- ***
+router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
+    // Requires Authentication
+    let { user } = req;
+
+    user = user.toJSON();
+    
+    let songs = await Song.findAll({
+        where: {
+            userId: user.id,
+        }
+    })
+
+    let songList = [];
+    for (let song of songs) {
+        songList.push(song.toJSON())
+    }
+
+    return res.json(songList);
+})
+
 // Get details of a song from its id --------------------
 router.get('/:songId', async (req, res, next) => {
     let { songId } = req.params
@@ -145,10 +166,10 @@ router.put('/:songId', requireAuth, async (req, res, next) => {
 // Delete a song -----------------------
 router.delete('/:songId', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { id } = req.params.songId;
+    const { songId } = req.params;
     const song = await Song.findOne({
         where: {
-            id
+            id: songId
         }
     })
 
@@ -167,24 +188,7 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
     })
 })
 
-// Get all songs created by the current user --------------------
-router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    let { id } = req.user;
 
-    let songs = await Song.findAll({
-        where: {
-            userId: id,
-        }
-    })
-
-    let songList = [];
-    for (let song of songs) {
-        songList.push(song.toJSON())
-    }
-
-    return res.json(songList);
-})
 
 // Get all songs ----------------- **
 router.get('/', async (req, res, next) => {
