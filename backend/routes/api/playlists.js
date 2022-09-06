@@ -10,13 +10,13 @@ const router = express.Router();
 // Add a song based on playlist id ------------------------------
 router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { playlistId } = req.params
+    const { id } = req.params.playlistId
     let { songId } = req.body;
     // let playlistId = playlistId.toJSON();
     // playlistId = playlistId.toJSON();
     // console.log(playlistId)
 
-    let playlist = await Playlist.findByPk(playlistId, {
+    let playlist = await Playlist.findByPk(id, {
         // include: [
         //     {
         //         model: Song
@@ -78,13 +78,7 @@ router.get('/:playlistId', async (req, res, next) => {
     const playlist = await Playlist.findByPk(playlistId, {
         include: [
             {
-                model: Song, 
-                through: 'songId',
-                exclude: [
-                    {
-                        model: PlaylistSong
-                    }
-                ]
+                model: Song,
             },
         ]
     })
