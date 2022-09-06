@@ -10,19 +10,17 @@ const router = express.Router();
 // Add a song based on playlist id ------------------------------
 router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { id } = req.params.playlistId
+    const { playlistId } = req.params
     let { songId } = req.body;
-    // let playlistId = playlistId.toJSON();
-    // playlistId = playlistId.toJSON();
-    // console.log(playlistId)
 
-    let playlist = await Playlist.findByPk(id, {})
+    let playlist = await Playlist.findByPk(playlistId, {})
 
     if (playlist) {
         let plsong = await PlaylistSong.create({
-            playlistId: id,
+            playlistId,
             songId
         })
+        res.json(plsong)
     }
 
 
@@ -44,10 +42,10 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
         })
     }
 
-    res.json({
-        playlist,
-        // song
-    });
+    // res.json({
+    //     plsong,
+    //     // song
+    // });
 })
 
 // Get all playlists from the current user -------------------------
