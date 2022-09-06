@@ -109,11 +109,18 @@ router.get('/:artistId/playlists', async (req, res, next) => {
 router.get('/:artistId', async (req, res, next) => {
     let { artistId } = req.params;
 
-    let user = await User.findOne({
-        where: {
-            id: artistId,
-        },
-    
+    let user = await User.findByPk(artistId, {
+        include: [
+            {
+                model: Song
+            },
+            {
+                model: Album
+            },
+            {
+                model: Playlist
+            }
+        ]
     })
 
     if (!user) {

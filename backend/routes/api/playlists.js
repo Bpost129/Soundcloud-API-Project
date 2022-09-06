@@ -10,7 +10,7 @@ const router = express.Router();
 // Add a song based on playlist id ------------------------------
 router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
     // Requires Authentication
-    const { id } = req.params;
+    const { id } = req.params.playlistId;
     let { songId } = req.body;
     // let id = playlistId.toJSON();
     // playlistId = playlistId.toJSON();

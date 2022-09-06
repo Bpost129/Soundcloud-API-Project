@@ -38,7 +38,7 @@ router.put('/:commentId', requireAuth, async (req, res, next) => {
         })
     }
 
-    body = body.toJSON();
+    // body = body.toJSON();
     comment.body = body;
 
     res.json(comment);
