@@ -80,7 +80,16 @@ router.get('/current', restoreUser, requireAuth, async (req, res, next) => {
 router.get('/:playlistId', async (req, res, next) => {
     const { playlistId } = req.params
     const playlist = await Playlist.findByPk(playlistId, {
-        include: Song
+        include: [
+            {
+                model: Song
+            }
+        ],
+        exclude: [
+            {
+                model: PlaylistSong
+            }
+        ]
     })
 
     if (!playlist) {
