@@ -33,7 +33,16 @@ router.get('/:albumId', async (req, res, next) => {
     let album = await Album.findOne({
         where: {
             id: albumId
-        }
+        },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'username', 'imageUrl']
+            },
+            {
+                model: Song
+            }
+        ]
     })
 
     if (!album) {

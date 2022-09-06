@@ -24,7 +24,7 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
         // ]
     })
 
-    await playlist.addSongs(songId)
+    await playlist.addSong(songId)
 
 
     let song = await Song.findByPk(songId, {})
@@ -78,7 +78,7 @@ router.get('/:playlistId', async (req, res, next) => {
     const playlist = await Playlist.findByPk(playlistId, {
         include: [
             {
-                model: Song,
+                model: PlaylistSong,
             },
         ]
     })
