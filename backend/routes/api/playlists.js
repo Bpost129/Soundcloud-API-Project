@@ -20,6 +20,13 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
             playlistId,
             songId
         })
+
+        plsong = {
+            id: plsong.id,
+            playlistId: plsong.playlistId,
+            songId: plsong.songId
+          }
+
         res.json(plsong)
     }
 
