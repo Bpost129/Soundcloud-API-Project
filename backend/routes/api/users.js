@@ -102,7 +102,6 @@ router.post(
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      imageUrl: user.imageUrl,
       token: user.token,
     }
 

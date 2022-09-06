@@ -105,11 +105,14 @@ router.get('/:artistId/playlists', async (req, res, next) => {
     res.json(playlistArr);
 })
 
-// Get details of an artist from an id ------------------------------ ** whole router
-router.get('/:artistId', async (req, res, next) => {
+// Get details of an artist from an id ------------------------------ ** adjust query params
+router.get('/:artistId', restoreUser, async (req, res, next) => {
     let { artistId } = req.params;
 
-    let user = await User.findByPk(artistId, {
+    let user = await User.findOne({
+        where:{
+            id: artistId
+        },
         include: [
             {
                 model: Song

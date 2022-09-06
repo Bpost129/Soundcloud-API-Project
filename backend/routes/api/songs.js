@@ -70,7 +70,13 @@ router.get('/:songId/comments', async (req, res, next) => {
     const comments = await Comment.findAll({
         where: {
             songId
-        }
+        },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'username']
+            }
+        ]
     })
 
     let commentList = [];
@@ -109,7 +115,17 @@ router.get('/:songId', async (req, res, next) => {
     let song = await Song.findOne({
         where: {
             id: songId,
-        }
+        },
+        include: [
+            { 
+                model: User,
+                attributes: ['id', 'username', 'imageUrl']
+            },
+            { 
+                model: Album, 
+                attributes: ['id', 'title', 'imageUrl']
+            },
+        ]
     })
 
     if (!song) {
@@ -193,6 +209,12 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
 // Get all songs ----------------- ***
 router.get('/', async (req, res, next) => {
     let { size, page } = req.query;
+
+    if (!size && !page) {
+        const songs = await Song.findAll({});
+        res.json(songs)
+    }
+
     if (!size) size = 1;
     if (!page) page = 1;
 
