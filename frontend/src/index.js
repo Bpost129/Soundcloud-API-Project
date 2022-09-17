@@ -13,13 +13,6 @@ import * as sessionActions from './store/session';
 
 const store = configureStore();
 
-// if (process.env.NODE_ENV !== 'production') {
-//   restoreCSRF();
-
-//   window.csrfFetch = csrfFetch;
-//   window.store = store;
-// }
-
 if (process.env.NODE_ENV !== 'production') {
   restoreCSRF();
 
@@ -40,7 +33,7 @@ function Root() {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Root />
   </React.StrictMode>,
   document.getElementById('root')
 );
