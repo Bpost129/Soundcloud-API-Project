@@ -1,4 +1,3 @@
-// frontend/src/components/LoginFormPage/index.js
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,9 +25,8 @@ function LoginFormPage() {
       });
   }
 
-  return (
-    <div> 
-    <form onSubmit={handleSubmit}>
+  return ( 
+    <form id="loginForm" onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
@@ -52,7 +50,6 @@ function LoginFormPage() {
       </label>
       <button type="submit">Log In</button>
     </form>
-    </div>
   );
 }
 
