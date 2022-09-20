@@ -4,9 +4,9 @@ import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/song";
 import './UploadSong.css';
 
-function UploadSongPage() {
+function UploadSongPage({ song }) {
     const dispatch = useDispatch();
-    // const sessionUser = useSelector((state) => state.session.user);
+    const seshsong = useSelector((state) => state.song);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("");
@@ -14,20 +14,22 @@ function UploadSongPage() {
 
     const [errors, setErrors] = useState([]);
   
-    // if (sessionUser) return <Redirect to="/" />;
+    if (seshsong) return <Redirect to="/" />;
   
+    // handle submit for uploading song (dispatch thunk with new entry)
     const handleSubmit = (e) => {
       e.preventDefault();
-    //   if (password === confirmPassword) {
-        setErrors([]);
-        return dispatch(sessionActions.createSong({ title, description, url, imageUrl }))
-          .catch(async (res) => {
-            const data = await res.json();
-            if (data && data.errors) setErrors(data.errors);
-          });
-    //   }
-    //   return setErrors(['All fields except imageUrl are required']);
+      const newSong = {
+        title,
+        description,
+        url,
+        imageUrl,
+      }
+
+      dispatch(sessionActions.createSong(newSong))
     };
+
+
   
     return (
       <div>

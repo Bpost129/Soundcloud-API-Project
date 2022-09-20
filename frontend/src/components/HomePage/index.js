@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getAllSongs } from '../../store/song'
 
 function HomePage() {
     const dispatch = useDispatch();
 //   const sessionUser = useSelector(state => state.session.user);
-    const { songId } = useParams();
+    // const { songId } = useParams();
 
     const songState = useSelector((state) => state.songs)
     const songs = Object.values(songState);
@@ -28,7 +28,7 @@ function HomePage() {
                         <div key={song.id} className='song'>
                             <img alt='song' src={song.imageUrl}></img>
                             <div className='song name'>{song.title}</div>
-                            {/* <div> artist name </div> */}
+                            <Link to={`/songs/${song.id}`}>Info</Link>
                         </div>
                     )
                 })}

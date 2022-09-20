@@ -17,6 +17,7 @@ function SignupFormPage() {
 
   if (sessionUser) return <Redirect to="/" />;
 
+  // handle submit for signup (dispatch thunk with new entry)
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {

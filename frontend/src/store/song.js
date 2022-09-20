@@ -3,8 +3,9 @@ import { csrfFetch } from './csrf';
 const GET_SONG = 'songs/getSongs';
 const CREATE_SONG = 'songs/createSong';
 // const UPDATE_SONG = 'songs/updateSong';
-// const DELETE_SONG = 'songs/deleteSong';
+const DELETE_SONG = 'songs/deleteSong';
 
+// get all songs action creator --> reducer
 const getSongs = (songs) => {
   return {
     type: GET_SONG,
@@ -12,6 +13,7 @@ const getSongs = (songs) => {
   };
 };
 
+// create a song action creator --> reducer
 const postSong = (song) => {
     return {
         type: CREATE_SONG,
@@ -26,13 +28,15 @@ const postSong = (song) => {
 //     }
 // }
 
-// const deleteSong = () => {
-//   return {
-//     type: DELETE_SONG,
-//   };
-// };
+// remove song action creator --> reducer
+export const deleteSong = (id) => {
+  return {
+    type: DELETE_SONG,
+    id
+  };
+};
 
-
+// get all songs thunk --> backend and back (send to home page)
 export const getAllSongs = () => async (dispatch) => {
     const response = await csrfFetch("/api/songs");
     if (response.ok) {
@@ -41,36 +45,54 @@ export const getAllSongs = () => async (dispatch) => {
     }
   };
 
-
-export const createSong = (song) => async (dispatch) => {
-    const { title, description, url, imageUrl } = song;
+// create song thunk --> backend and back (send to upload page)
+export const createSong = (payload) => async (dispatch) => {
+    // const { title, description, url, imageUrl } = song;
     const response = await csrfFetch("/api/songs", {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            title,
-            description,
-            url,
-            imageUrl,
+            payload  
+          // title,
+            // description,
+            // url,
+            // imageUrl,
         })
     })
-    const data = await response.json();
-    dispatch(postSong(data.song))
 
+    const song = await response.json();
+    dispatch(postSong(song))
+    return song;
 }
 
-const initialState = {};
 
+// remove song thunk --> backend> (send to single song page)
+// export const removeSong = () => async(dispatch) => {
+
+// }
+
+const initialState = {
+  songs: [],
+//   song: {}
+};
+
+
+
+
+// song reducer --> index --> upload page & single song page & App
 const songReducer = (state = initialState, action) => {
-//   let newState;
+  let newState = { ...state }
   switch (action.type) {
     case GET_SONG:
-        const allSongs = {};
+        const allSongs = { ...newState.songs };
         action.songs.forEach((song) => {allSongs[song.id] = song})
         return allSongs;
     case CREATE_SONG:
-        const song = {};
-        
+        newState[action.song.id] = action.song
+        return newState;
+    case DELETE_SONG:
+        delete newState[action.id]
+        return newState
     default:
       return state;
   }

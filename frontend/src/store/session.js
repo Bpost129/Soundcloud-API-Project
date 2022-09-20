@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
+// set user action creator --> reducer  
 const setUser = (user) => {
   return {
     type: SET_USER,
@@ -10,12 +11,14 @@ const setUser = (user) => {
   };
 };
 
+// remove user action creator --> reducer
 const removeUser = () => {
   return {
     type: REMOVE_USER,
   };
 };
 
+// signup thunk --> backend and back (send to sign up form page)
 export const signup = (user) => async (dispatch) => {
   const { username, firstName, lastName, email, password } = user;
   const response = await csrfFetch("/api/users", {
@@ -33,6 +36,7 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
+//login thunk --> backend and back (send to login form page)
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch('/api/session', {
@@ -47,6 +51,7 @@ export const login = (user) => async (dispatch) => {
   return response;
 };
 
+// login with demo user thunk --> backend and back (send to login form page)
 // export const loginDemo = (user) => async (dispatch) => {
 //   const { credential, password } = user;
 //   user.credential = 'DemoUser';
@@ -63,6 +68,7 @@ export const login = (user) => async (dispatch) => {
 //   return response;
 // }
 
+// restore user thunk 
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
   const data = await response.json();
@@ -70,6 +76,7 @@ export const restoreUser = () => async dispatch => {
   return response;
 };
 
+// log out thunk --> (send to navigation)
 export const logout = () => async (dispatch) => {
   const response = await csrfFetch('/api/session', {
     method: 'DELETE',
@@ -80,6 +87,7 @@ export const logout = () => async (dispatch) => {
 
 const initialState = { user: null };
 
+// session reducer --> index --> login & signup & App
 const sessionReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
