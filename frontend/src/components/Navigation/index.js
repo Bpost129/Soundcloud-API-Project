@@ -25,6 +25,7 @@ function Navigation({ isLoaded }){
     <ul id="navUl">
       <li>
         <NavLink exact to="/">Home</NavLink>
+        <NavLink to="/upload">Upload</NavLink>
         {isLoaded && sessionLinks}
       </li>
     </ul>

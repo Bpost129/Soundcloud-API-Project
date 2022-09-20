@@ -5,16 +5,16 @@ const { Op } = require('sequelize');
 
 const playlistSongs = [
   {
-    playlist: { name: "Summer Hits" },
-    song: { title: "Don't Start Now" }
+    playlist: { name: "Electric" },
+    song: { title: "Say Nothing" }
   },
   {
-    playlist: { name: "Classics" },
-    song: { title: "Larger Than Life" }
+    playlist: { name: "Pop" },
+    song: { title: "Destiny" }
   },
   {
-    playlist: { name: "Party" },
-    song: { title: "Rebel Without A Pause" }
+    playlist: { name: "Alternative" },
+    song: { title: "Stoned" }
   },
 ]
 

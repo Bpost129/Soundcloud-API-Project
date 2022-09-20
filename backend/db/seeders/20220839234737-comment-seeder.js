@@ -25,7 +25,37 @@ module.exports = {
     {
       songId: 3,
       userId: 3,
-      body: "Mid",
+      body: "Lame",
+    },
+    {
+      songId: 4,
+      userId: 3,
+      body: "Now this is it.",
+    },
+    {
+      songId: 1,
+      userId: 3,
+      body: "Now that's what i call music",
+    },
+    {
+      songId: 2,
+      userId: 1,
+      body: "Delete this.",
+    },
+    {
+      songId: 3,
+      userId: 2,
+      body: "Never heard a better song!",
+    },
+    {
+      songId: 4,
+      userId: 3,
+      body: "Awesome!",
+    },
+    {
+      songId: 5,
+      userId: 4,
+      body: "Wow. Just wow.",
     },
    ], {})
   },

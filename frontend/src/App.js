@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import HomePage from "./components/HomePage"
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
+import UploadSongPage from "./components/UploadSongPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -19,7 +22,10 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/">
-            <h1>Soundwave</h1>
+            <HomePage />
+          </Route>
+          <Route path="/upload">
+            <UploadSongPage />
           </Route>
           <Route path="/login">
             <LoginFormPage />
