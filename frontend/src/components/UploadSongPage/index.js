@@ -15,13 +15,12 @@ function UploadSongPage({ song }) {
     const [albumId, setAlbumId] = useState("")
     const [errors, setErrors] = useState([]);
   
-    if (seshsong) return <Redirect to="/" />;
+    
   
     // handle submit for uploading song (dispatch thunk with new entry)
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       song = {
-        ...song,
         title,
         description,
         url,
@@ -29,11 +28,11 @@ function UploadSongPage({ song }) {
         albumId,
       }
 
-      dispatch(createSong(song))
+      return dispatch(createSong(song))
       // history.push(`/api/songs/${song.id}`)
     };
 
-
+if (seshsong) return <Redirect to="/" />;
   
     return (
       <div>

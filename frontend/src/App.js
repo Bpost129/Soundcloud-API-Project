@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+
+import AudioPLayer from 'react-h5-audio-player';
+
 import HomePage from "./components/HomePage"
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
@@ -16,6 +19,15 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+
+  const Player = () => {
+    <AudioPLayer
+      autoPlay="true"
+      src="https://www.free-stock-music.com/music/tubebackr-say-nothing.mp3"
+    />
+  }
+
 
   return (
     <>
@@ -38,7 +50,9 @@ function App() {
             <SingleSongPage />
           </Route>
         </Switch>
+        
       )}
+        <Player isLoaded={isLoaded}/>
     </>
   );
 }

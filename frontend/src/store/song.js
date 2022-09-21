@@ -51,13 +51,7 @@ export const createSong = (payload) => async (dispatch) => {
     const response = await csrfFetch("/api/songs", {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            payload  
-          // title,
-            // description,
-            // url,
-            // imageUrl,
-        })
+        body: JSON.stringify({payload})
     })
 
     const song = await response.json();
