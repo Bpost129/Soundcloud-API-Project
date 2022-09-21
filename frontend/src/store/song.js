@@ -93,9 +93,9 @@ const songReducer = (state = initialState, action) => {
         const allSongs = { ...newState.songs };
         action.songs.forEach((song) => {allSongs[song.id] = song})
         return allSongs;
-    // case CREATE_SONG:
-    //     newState[action.id] = action.song
-    //     return newState;
+    case CREATE_SONG:
+        newState[action.song.id] = action.song
+        return newState;
     case DELETE_SONG:
         delete newState[action.id]
         return newState

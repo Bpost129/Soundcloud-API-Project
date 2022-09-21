@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import * as sessionActions from "../../store/song";
+import { createSong } from "../../store/song";
 import './UploadSong.css';
 
 function UploadSongPage({ song }) {
@@ -13,7 +13,6 @@ function UploadSongPage({ song }) {
     const [url, setUrl] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [albumId, setAlbumId] = useState("")
-
     const [errors, setErrors] = useState([]);
   
     if (seshsong) return <Redirect to="/" />;
@@ -21,7 +20,8 @@ function UploadSongPage({ song }) {
     // handle submit for uploading song (dispatch thunk with new entry)
     const handleSubmit = (e) => {
       e.preventDefault();
-      const newSong = {
+      song = {
+        ...song,
         title,
         description,
         url,
@@ -29,8 +29,8 @@ function UploadSongPage({ song }) {
         albumId,
       }
 
-      dispatch(sessionActions.createSong(newSong))
-      // history.push(`/api/songs/${newSong.id}`)
+      dispatch(createSong(song))
+      // history.push(`/api/songs/${song.id}`)
     };
 
 
