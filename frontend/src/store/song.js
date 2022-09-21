@@ -67,9 +67,17 @@ export const createSong = (payload) => async (dispatch) => {
 
 
 // remove song thunk --> backend> (send to single song page)
-// export const removeSong = () => async(dispatch) => {
-
-// }
+export const removeSong = (id) => async(dispatch) => {
+    const response = await csrfFetch(`/api/songs/${id}`, {
+        method: 'DELETE',
+        headers: { "Content-Type": "application/json" }
+    });
+    if (response.ok) {
+      const song = await response.json();
+      dispatch(deleteSong(id));
+    }
+    
+}
 
 const initialState = {
   songs: [],
@@ -77,9 +85,7 @@ const initialState = {
 };
 
 
-
-
-// song reducer --> index --> upload page & single song page & App
+// song reducer --> index --> upload page & single song page & home page/App
 const songReducer = (state = initialState, action) => {
   let newState = { ...state }
   switch (action.type) {
@@ -87,9 +93,9 @@ const songReducer = (state = initialState, action) => {
         const allSongs = { ...newState.songs };
         action.songs.forEach((song) => {allSongs[song.id] = song})
         return allSongs;
-    case CREATE_SONG:
-        newState[action.song.id] = action.song
-        return newState;
+    // case CREATE_SONG:
+    //     newState[action.id] = action.song
+    //     return newState;
     case DELETE_SONG:
         delete newState[action.id]
         return newState

@@ -8,7 +8,7 @@ const SingleSongPage = () => {
     const { songId } = useParams();
     const song = useSelector(state => state.songs[songId]);
 
-    const removeSong = (e) => {
+    const removeSong = async (e) => {
         e.preventDefault();
         dispatch(deleteSong(song.id))
     }

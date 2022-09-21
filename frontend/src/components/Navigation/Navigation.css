@@ -1,14 +1,21 @@
 #navUl {
     padding: 10px;
-    background-color: palevioletred;
+    background-color: grey;
 }
 
 #navUl > li {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+
+    justify-content: space-between;
     padding: 5px;
-    margin: 5px;
+    /* margin: 0px 150px; */
     
 }
+
+/* #uploadLink {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+} */
 
