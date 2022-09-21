@@ -34,7 +34,7 @@ function HomePage() {
             </div>
         </div>
         <div>
-            <h2>Playlists</h2>
+            
         </div>
     </div>
   );
