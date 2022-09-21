@@ -19,7 +19,6 @@ function HomePage() {
 
   return ( 
     <div>
-        <h1>Soundwave</h1>
         <div>
             <h2>Songs</h2>
             <div id="songDiv">

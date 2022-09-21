@@ -17,7 +17,7 @@ module.exports = {
       userId: 1,
       title: "Say Nothing",
       description: "Electric",
-      url: "https://www.free-stock-music.com/tubebackr-say-nothing.html",
+      url: "https://www.free-stock-music.com/music/tubebackr-say-nothing.mp3",
       imageUrl: "https://www.free-stock-music.com/thumbnails/tubebackr-say-nothing.jpg",
     },
     {

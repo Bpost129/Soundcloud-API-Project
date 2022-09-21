@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/song";
 import './UploadSong.css';
 
 function UploadSongPage({ song }) {
+    // const history = useHistory();
     const dispatch = useDispatch();
     const seshsong = useSelector((state) => state.song);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("");
     const [imageUrl, setImageUrl] = useState("");
+    const [albumId, setAlbumId] = useState("")
 
     const [errors, setErrors] = useState([]);
   
@@ -24,9 +26,11 @@ function UploadSongPage({ song }) {
         description,
         url,
         imageUrl,
+        albumId,
       }
 
       dispatch(sessionActions.createSong(newSong))
+      // history.push(`/api/songs/${newSong.id}`)
     };
 
 
@@ -70,6 +74,14 @@ function UploadSongPage({ song }) {
             type="text"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
+          />
+        </label>
+        <label>
+          Album ID
+          <input
+            type="text"
+            value={albumId}
+            onChange={(e) => setAlbumId(e.target.value)}
           />
         </label>
         <button type="submit">Submit</button>

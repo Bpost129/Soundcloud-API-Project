@@ -10,6 +10,7 @@ h2 {
 #songDiv {
     display: flex;
     flex-direction: row;
+    overflow: scroll;
     background-color: lightgrey;
 }
 
@@ -19,5 +20,5 @@ h2 {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0px 150px;
+    margin: 0px 300px;
 }
