@@ -153,7 +153,7 @@ router.put('/:songId', requireAuth, async (req, res, next) => {
 
     if (!song) {
         res.status = 400;
-        res.json({
+        return res.json({
             "message": "Song couldn't be found",
             "statusCode": 404
         })
@@ -161,7 +161,7 @@ router.put('/:songId', requireAuth, async (req, res, next) => {
 
     if (!title || !url) {
         res.status = 400;
-        res.json({
+        return res.json({
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
@@ -176,7 +176,53 @@ router.put('/:songId', requireAuth, async (req, res, next) => {
     song.url = url;
     song.imageUrl = imageUrl;
 
-    res.json(song);
+    return res.json(song);
+})
+
+// Create a song ------------------- ***
+router.post('/', restoreUser, requireAuth, async (req, res, next) => {
+    // Requires Authentication
+    let { id } = req.user;
+
+    const { title, description, url, imageUrl, albumId } = req.body;
+
+    // let album = await Album.findOne({
+    //     where: {
+    //         id: albumId
+    //     }
+    // })
+
+    let song = await Song.create({
+        userId: id,
+        albumId,
+        title,
+        description,
+        url,
+        imageUrl,
+    })
+
+    song = song.toJSON();
+
+
+    if (!album && albumId) {
+        res.status = 404;
+        return res.json({
+            "message": "Album couldn't be found",
+            "statusCode": 404
+        })
+    } else if (!title || !url) {
+        res.status = 400;
+        return res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "title": "Song title is required",
+                "url": "Audio is required"
+            }
+        })
+    } else {
+        return res.json(song);
+    }
 })
 
 // Delete a song -----------------------
@@ -261,54 +307,6 @@ router.get('/', async (req, res, next) => {
     
 })
 
-// Create a song ------------------- ***
-router.post('/', restoreUser, requireAuth, async (req, res, next) => {
-    // Requires Authentication
-    let { id } = req.user;
 
-    const { title, description, url, imageUrl, albumId } = req.body;
-
-    // let album = await Album.findOne({
-    //     where: {
-    //         id: albumId
-    //     }
-    // })
-
-    
-
-    let song = await Song.create({
-        userId: id,
-        albumId,
-        title,
-        description,
-        url,
-        imageUrl,
-    })
-
-    song = song.toJSON();
-
-
-    if (!album && albumId) {
-        res.status = 404;
-        res.json({
-            "message": "Album couldn't be found",
-            "statusCode": 404
-        })
-    } else if (!title || !url) {
-        res.status = 400;
-        res.json({
-            "message": "Validation error",
-            "statusCode": 400,
-            "errors": {
-                "title": "Song title is required",
-                "url": "Audio is required"
-            }
-        })
-    } else {
-        res.json(song);
-    }
-
-    
-})
 
 module.exports = router;

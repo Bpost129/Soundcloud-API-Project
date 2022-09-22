@@ -2,7 +2,7 @@ import { csrfFetch } from './csrf';
 
 const GET_SONG = 'songs/getSongs';
 const CREATE_SONG = 'songs/createSong';
-// const UPDATE_SONG = 'songs/updateSong';
+const UPDATE_SONG = 'songs/updateSong';
 const DELETE_SONG = 'songs/deleteSong';
 
 // get all songs action creator --> reducer
@@ -21,12 +21,13 @@ const postSong = (song) => {
     };
 };
 
-// const updateSong = (song) => {
-//     return {
-//         type: UPDATE_SONG,
-//         song
-//     }
-// }
+//update song action creator ---> reducer
+const updateSong = (song) => {
+    return {
+        type: UPDATE_SONG,
+        song
+    }
+}
 
 // remove song action creator --> reducer
 export const deleteSong = (id) => {
@@ -58,9 +59,29 @@ export const createSong = (payload) => async (dispatch) => {
       dispatch(postSong(song))
       return song;
     }
-    
 }
 
+// update song thunk --> backend and back (send to single song page)
+export const editSong = (payload) => async (dispatch) => {
+    // const { title, description, url, imageUrl, albumId } = song
+    const response = await csrfFetch("/api/songs/:songId", {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        payload,
+          // title,
+          // description,
+          // url,
+          // imageUrl,
+          // albumId,
+      })
+    })
+    if (response.ok) {
+      const newSong = await response.json({});
+      dispatch(updateSong(newSong));
+      return newSong;
+    }
+}
 
 // remove song thunk --> backend> (send to single song page)
 export const removeSong = (id) => async(dispatch) => {
@@ -89,7 +110,10 @@ const songReducer = (state = initialState, action) => {
         action.songs.forEach((song) => {allSongs[song.id] = song})
         return allSongs;
     case CREATE_SONG:
-        newState.songs = [ ...newState.songs.id] = action.song
+        newState[action.song.id] = action.song
+        return newState;
+    case UPDATE_SONG:
+        newState[action.payload.id] = action.payload
         return newState;
     case DELETE_SONG:
         delete newState[action.id]

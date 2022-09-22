@@ -1,6 +1,6 @@
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeSong } from '../../store/song';
+import { removeSong, editSong } from '../../store/song';
 import './SingleSongPage.css';
 
 const SingleSongPage = () => {
@@ -13,6 +13,12 @@ const SingleSongPage = () => {
         e.preventDefault();
         dispatch(removeSong(song.id))
         history.push("/")
+    }
+
+    const changeSong = async (e) => {
+        e.preventDefault();
+        dispatch(editSong(song.id))
+        history.push(`/songs/${songId}`)
     }
 
    
@@ -31,8 +37,8 @@ const SingleSongPage = () => {
                 controls
                 src={song.url}
             ></audio>
-
-            <button>Update</button>
+                        {/* not actually the right solution */}
+            <button onClick={changeSong}>Update</button>   
             <button onClick={removeaSong}>Delete</button>
         </div>
     );
