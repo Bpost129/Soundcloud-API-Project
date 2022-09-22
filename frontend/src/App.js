@@ -52,7 +52,11 @@ function App() {
         </Switch>
         
       )}
-        <Player isLoaded={isLoaded}/>
+        <AudioPLayer
+          autoPlay={true}
+          src="https://www.free-stock-music.com/music/tubebackr-say-nothing.mp3"
+          crossOrigin="false" 
+        />
     </>
   );
 }

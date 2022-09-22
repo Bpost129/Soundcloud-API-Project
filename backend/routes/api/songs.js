@@ -197,7 +197,7 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
         })
     }
 
-    song.destroy();
+    await song.destroy();
     res.json({
         "message": "Succefully deleted",
         "statusCode": 200
@@ -212,7 +212,7 @@ router.get('/', async (req, res, next) => {
 
     if (!size && !page) {
         const songs = await Song.findAll({});
-        res.json(songs)
+        return res.json(songs)
     }
 
     if (!size) size = 1;
@@ -227,6 +227,18 @@ router.get('/', async (req, res, next) => {
         pagination.offset = size * (page - 1);
     }
 
+    
+
+    const songs = await Song.findAll({
+        ...pagination
+    })
+
+    const songList = [];
+    for (let song of songs) {
+        songList.push(song.toJSON())
+    }
+
+
     if (page < 0 || size < 0) {
         res.status = 400;
         res.json({
@@ -238,23 +250,15 @@ router.get('/', async (req, res, next) => {
                 "createdAt": "CreatedAt is invalid"
             }
         })
+    } else {
+        return res.json({
+            songs,
+            page,
+            size
+        });
     }
-
-    const songs = await Song.findAll({
-        ...pagination
-    })
-
-    const songList = [];
-    for (let song of songs) {
-        songList.push(song.toJSON())
-    }
-
     
-    return res.json({
-        songs,
-        page,
-        size
-    });
+    
 })
 
 // Create a song ------------------- ***
@@ -262,33 +266,15 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
     let { id } = req.user;
 
-    const { title, description, url, imageUrl, albumId } = req.body;
+    let { title, description, url, imageUrl, albumId } = req.body;
 
-    let album = await Album.findOne({
-        where: {
-            id: albumId
-        }
-    })
+    // let album = await Album.findOne({
+    //     where: {
+    //         id: albumId
+    //     }
+    // })
 
-    if (!album && albumId) {
-        res.status = 404;
-        res.json({
-            "message": "Album couldn't be found",
-            "statusCode": 404
-        })
-    }
-
-    if (!title || !url) {
-        res.status = 400;
-        res.json({
-            "message": "Validation error",
-            "statusCode": 400,
-            "errors": {
-                "title": "Song title is required",
-                "url": "Audio is required"
-            }
-        })
-    }
+    
 
     let song = await Song.create({
         userId: id,
@@ -299,10 +285,30 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
         imageUrl,
     })
 
-
     song = song.toJSON();
 
-    res.json(song);
+
+    if (!album && albumId) {
+        res.status = 404;
+        res.json({
+            "message": "Album couldn't be found",
+            "statusCode": 404
+        })
+    } else if (!title || !url) {
+        res.status = 400;
+        res.json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "title": "Song title is required",
+                "url": "Audio is required"
+            }
+        })
+    } else {
+        res.json(song);
+    }
+
+    
 })
 
 module.exports = router;

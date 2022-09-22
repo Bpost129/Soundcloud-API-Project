@@ -53,10 +53,12 @@ export const createSong = (payload) => async (dispatch) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({payload})
     })
-
-    const song = await response.json();
-    dispatch(postSong(song))
-    return song;
+    if (response.ok) {
+      const song = await response.json({});
+      dispatch(postSong(song))
+      return song;
+    }
+    
 }
 
 
@@ -74,7 +76,6 @@ export const removeSong = (id) => async(dispatch) => {
 }
 
 const initialState = {
-  songs: [],
 //   song: {}
 };
 
@@ -84,11 +85,11 @@ const songReducer = (state = initialState, action) => {
   let newState = { ...state }
   switch (action.type) {
     case GET_SONG:
-        const allSongs = { ...newState.songs };
+        const allSongs = {};
         action.songs.forEach((song) => {allSongs[song.id] = song})
         return allSongs;
     case CREATE_SONG:
-        newState[action.song.id] = action.song
+        newState.songs = [ ...newState.songs.id] = action.song
         return newState;
     case DELETE_SONG:
         delete newState[action.id]
