@@ -266,7 +266,7 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
     // Requires Authentication
     let { id } = req.user;
 
-    let { title, description, url, imageUrl, albumId } = req.body;
+    const { title, description, url, imageUrl, albumId } = req.body;
 
     // let album = await Album.findOne({
     //     where: {
