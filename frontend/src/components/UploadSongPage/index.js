@@ -27,8 +27,8 @@ function UploadSongPage({ song }) {
         imageUrl,
         albumId,
       }
-      
-      return dispatch(createSong(song))
+
+      dispatch(createSong(song))
       // history.push(`/api/songs/${song.id}`)
     };
 
