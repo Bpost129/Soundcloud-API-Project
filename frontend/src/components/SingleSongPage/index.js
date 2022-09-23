@@ -33,10 +33,10 @@ const SingleSongPage = () => {
             <div>Description: {song.description}</div>
             <a href={song.url}>URL</a>
 
-            <audio 
+            {/* <audio 
                 controls
                 src={song.url}
-            ></audio>
+            ></audio> */}
                         {/* not actually the right solution */}
             <button onClick={changeSong}>Update</button>   
             <button onClick={removeaSong}>Delete</button>
