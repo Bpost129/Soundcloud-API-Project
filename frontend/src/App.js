@@ -13,6 +13,7 @@ import Navigation from "./components/Navigation";
 import SingleSongPage from "./components/SingleSongPage";
 
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,12 +22,7 @@ function App() {
   }, [dispatch]);
 
 
-  const Player = () => {
-    <AudioPLayer
-      autoPlay="true"
-      src="https://www.free-stock-music.com/music/tubebackr-say-nothing.mp3"
-    />
-  }
+  
 
 
   return (
@@ -53,9 +49,9 @@ function App() {
         
       )}
         <AudioPLayer
-          autoPlay={true}
+          autoPlay
           src="https://www.free-stock-music.com/music/tubebackr-say-nothing.mp3"
-          crossOrigin="false" 
+          
         />
     </>
   );
