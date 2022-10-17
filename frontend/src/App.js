@@ -5,14 +5,12 @@ import { Route, Switch } from "react-router-dom";
 import AudioPLayer from 'react-h5-audio-player';
 
 import HomePage from "./components/HomePage"
-import LoginFormPage from "./components/LoginFormModal";
-import SignupFormPage from "./components/SignupFormModal";
+// import LoginFormPage from "./components/LoginFormModal";
+// import SignupFormPage from "./components/SignupFormModal";
 import UploadSongPage from "./components/UploadSongPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SingleSongPage from "./components/SingleSongPage";
-
-
 
 function App() {
   const dispatch = useDispatch();
@@ -20,10 +18,6 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
-
-  
-
 
   return (
     <>
