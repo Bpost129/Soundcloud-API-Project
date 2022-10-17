@@ -5,8 +5,8 @@ import { Route, Switch } from "react-router-dom";
 import AudioPLayer from 'react-h5-audio-player';
 
 import HomePage from "./components/HomePage"
-import LoginFormPage from "./components/LoginFormPage";
-import SignupFormPage from "./components/SignupFormPage";
+import LoginFormPage from "./components/LoginFormModal";
+import SignupFormPage from "./components/SignupFormModal";
 import UploadSongPage from "./components/UploadSongPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
@@ -36,12 +36,12 @@ function App() {
           <Route path="/upload">
             <UploadSongPage />
           </Route>
-          <Route path="/login">
+          {/* <Route path="/login">
             <LoginFormPage />
-          </Route>
-          <Route path="/signup">
+          </Route> */}
+          {/* <Route path="/signup">
             <SignupFormPage />
-          </Route>
+          </Route> */}
           <Route path="/songs/:songId">
             <SingleSongPage />
           </Route>
