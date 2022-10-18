@@ -49,11 +49,13 @@ export const getAllSongs = () => async (dispatch) => {
 // create song thunk --> backend and back (send to upload page)
 export const createSong = (payload) => async (dispatch) => {
     // const { title, description, url, imageUrl } = song;
+    console.log('this is the payload before database:', payload);
     const response = await csrfFetch("/api/songs", {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
     })
+    // console.log(response);
     if (response.ok) {
       const song = await response.json({});
       dispatch(postSong(song))

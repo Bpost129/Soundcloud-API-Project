@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { createSong } from "../../store/song";
@@ -15,7 +15,9 @@ function UploadSongPage({ song }) {
     const [albumId, setAlbumId] = useState("")
     const [errors, setErrors] = useState([]);
   
-    
+    useEffect(() => {
+      console.log(albumId)
+    }, [albumId]); 
   
     // handle submit for uploading song (dispatch thunk with new entry)
     const handleSubmit = async (e) => {
@@ -26,16 +28,16 @@ function UploadSongPage({ song }) {
         description,
         url,
         imageUrl,
-        albumId,
+        albumId: albumId === "" ? null : Number(albumId),
       }
 
-      dispatch(createSong(song))
+      let newSong = await dispatch(createSong(song))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
 
-      history.push(`/api/songs/${song.id}`)
+      if (newSong) history.push(`/songs/${newSong.id}`);
     };
 
 // if (seshsong) return <Redirect to="/" />;
@@ -84,7 +86,7 @@ function UploadSongPage({ song }) {
         <label>
           Album ID
           <input
-            type="text"
+            type="number"
             value={albumId}
             onChange={(e) => setAlbumId(e.target.value)}
           />

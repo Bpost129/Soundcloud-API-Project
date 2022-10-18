@@ -186,11 +186,11 @@ router.post('/', restoreUser, requireAuth, async (req, res, next) => {
 
     const { title, description, url, imageUrl, albumId } = req.body;
 
-    // let album = await Album.findOne({
-    //     where: {
-    //         id: albumId
-    //     }
-    // })
+    let album = await Album.findOne({
+        where: {
+            id: albumId
+        }
+    })
 
     let song = await Song.create({
         userId: id,

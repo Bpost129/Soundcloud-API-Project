@@ -12,7 +12,7 @@ const SingleSongPage = () => {
     const changeSong = async (e) => {
         // e.preventDefault();
         // dispatch(editSong(song.id))
-        // history.push(`/songs/${songId}/update`)
+        history.push(`/songs/${songId}/update`)
     }
 
     const removeaSong = async (e) => {
@@ -37,7 +37,7 @@ const SingleSongPage = () => {
                 src={song.url}
             ></audio> */}
                         {/* not actually the right solution */}
-            <button onClick={(() => {history.push(`/songs/${songId}/update`)})}>Update</button>   
+            <button onClick={changeSong}>Update</button>   
             <button onClick={removeaSong}>Delete</button>
         </div>
     );
