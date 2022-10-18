@@ -5,9 +5,9 @@ import { createSong } from "../../store/song";
 import './UploadSong.css';
 
 function UploadSongPage({ song }) {
-    // const history = useHistory();
+    const history = useHistory();
     const dispatch = useDispatch();
-    const seshsong = useSelector((state) => state.song);
+    // const seshsong = useSelector((state) => state.song);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("");
@@ -35,10 +35,10 @@ function UploadSongPage({ song }) {
           if (data && data.errors) setErrors(data.errors);
         });
 
-      // history.push(`/api/songs/${song.id}`)
+      history.push(`/api/songs/${song.id}`)
     };
 
-if (seshsong) return <Redirect to="/" />;
+// if (seshsong) return <Redirect to="/" />;
   
     return (
       <div>
