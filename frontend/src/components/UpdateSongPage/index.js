@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import { createSong } from "../../store/song";
-import './UploadSong.css';
+import { editSong } from "../../store/song";
+// import './UploadSong.css';
 
-function UploadSongPage({ song }) {
+function UpdateSongPage({ song }) {
     // const history = useHistory();
     const dispatch = useDispatch();
-    const seshsong = useSelector((state) => state.song);
+    // const seshsong = useSelector((state) => state.song);
+    // const song = useSelector(state => state.songs[songId]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("");
@@ -29,20 +30,20 @@ function UploadSongPage({ song }) {
         albumId,
       }
 
-      dispatch(createSong(song))
+      dispatch(editSong(song))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
 
-      // history.push(`/api/songs/${song.id}`)
+    //   history.push(`/api/songs/${song.id}`)
     };
 
-if (seshsong) return <Redirect to="/" />;
+// if (seshsong) return <Redirect to="/" />;
   
     return (
       <div>
-      <form id="uploadSongForm" onSubmit={handleSubmit}>
+      <form id="updateSongForm" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
@@ -96,4 +97,4 @@ if (seshsong) return <Redirect to="/" />;
     );
   }
   
-  export default UploadSongPage;
+  export default UpdateSongPage;

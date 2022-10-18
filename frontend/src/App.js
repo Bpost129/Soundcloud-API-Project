@@ -11,6 +11,7 @@ import UploadSongPage from "./components/UploadSongPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SingleSongPage from "./components/SingleSongPage";
+import UpdateSongPage from "./components/UpdateSongPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,9 @@ function App() {
           </Route> */}
           <Route path="/songs/:songId">
             <SingleSongPage />
+          </Route>
+          <Route path="/songs/:songId/update">
+            <UpdateSongPage />
           </Route>
         </Switch>
         

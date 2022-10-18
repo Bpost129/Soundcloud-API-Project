@@ -52,7 +52,7 @@ export const createSong = (payload) => async (dispatch) => {
     const response = await csrfFetch("/api/songs", {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({payload})
+        body: JSON.stringify(payload)
     })
     if (response.ok) {
       const song = await response.json({});
@@ -64,17 +64,10 @@ export const createSong = (payload) => async (dispatch) => {
 // update song thunk --> backend and back (send to single song page)
 export const editSong = (payload) => async (dispatch) => {
     // const { title, description, url, imageUrl, albumId } = song
-    const response = await csrfFetch("/api/songs/:songId", {
+    const response = await csrfFetch(`/api/songs/${payload.id}`, {
       method: 'PUT',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        payload,
-          // title,
-          // description,
-          // url,
-          // imageUrl,
-          // albumId,
-      })
+      body: JSON.stringify(payload)
     })
     if (response.ok) {
       const newSong = await response.json({});
@@ -93,7 +86,6 @@ export const removeSong = (id) => async(dispatch) => {
       const song = await response.json();
       dispatch(deleteSong(id));
     }
-    
 }
 
 const initialState = {
