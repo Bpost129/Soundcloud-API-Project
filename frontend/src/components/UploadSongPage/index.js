@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { createSong } from "../../store/song";
 import './UploadSong.css';
 
@@ -37,7 +37,7 @@ function UploadSongPage({ song }) {
           if (data && data.errors) setErrors(data.errors);
         });
 
-      if (newSong) history.push(`/songs/${newSong.id}`);
+      if (newSong) history.push(`/songs/${newSong.id}`)
     };
 
 // if (seshsong) return <Redirect to="/" />;

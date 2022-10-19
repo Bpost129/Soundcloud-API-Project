@@ -1,6 +1,6 @@
 import { csrfFetch } from './csrf';
 
-const GET_SONG = 'songs/getSongs';
+const GET_SONGS = 'songs/getSongs';
 const CREATE_SONG = 'songs/createSong';
 const UPDATE_SONG = 'songs/updateSong';
 const DELETE_SONG = 'songs/deleteSong';
@@ -8,7 +8,7 @@ const DELETE_SONG = 'songs/deleteSong';
 // get all songs action creator --> reducer
 const getSongs = (songs) => {
   return {
-    type: GET_SONG,
+    type: GET_SONGS,
     songs
   };
 };
@@ -66,6 +66,7 @@ export const createSong = (payload) => async (dispatch) => {
 // update song thunk --> backend and back (send to single song page)
 export const editSong = (payload) => async (dispatch) => {
     // const { title, description, url, imageUrl, albumId } = song
+    console.log('the edited song: ', payload)
     const response = await csrfFetch(`/api/songs/${payload.id}`, {
       method: 'PUT',
       headers: { "Content-Type": "application/json" },
@@ -85,7 +86,7 @@ export const removeSong = (id) => async(dispatch) => {
         headers: { "Content-Type": "application/json" }
     });
     if (response.ok) {
-      const song = await response.json();
+      // const song = await response.json();
       dispatch(deleteSong(id));
     }
 }
@@ -99,7 +100,7 @@ const initialState = {
 const songReducer = (state = initialState, action) => {
   let newState = { ...state }
   switch (action.type) {
-    case GET_SONG:
+    case GET_SONGS:
         const allSongs = {};
         action.songs.forEach((song) => {allSongs[song.id] = song})
         return allSongs;
@@ -107,8 +108,14 @@ const songReducer = (state = initialState, action) => {
         newState[action.song.id] = action.song
         return newState;
     case UPDATE_SONG:
-        newState[action.payload.id] = action.payload
-        return newState;
+        return {
+          ...newState,
+          [action.song.id]: action.song
+        }
+
+
+        // newState[action.song.id] = action.song
+        // return newState;
     case DELETE_SONG:
         delete newState[action.id]
         return newState

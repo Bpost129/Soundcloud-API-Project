@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { editSong } from "../../store/song";
 import './UpdateSong.css';
 
-function UpdateSongPage() {
+function UpdateSongPage({ song }) {
     const history = useHistory();
     const dispatch = useDispatch();
-    
-    // const seshsong = useSelector((state) => state.song);
-    // const song = useSelector(state => state.songs[songId]);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [url, setUrl] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
-    const [albumId, setAlbumId] = useState("")
-    const [errors, setErrors] = useState([]);
+
     const { songId } = useParams();
-    let song = useSelector(state => state.songs[songId]);
+    let song2 = useSelector(state => state.songs[songId]);
+
+    const [title, setTitle] = useState(song2.title);
+    const [description, setDescription] = useState(song2.description);
+    const [url, setUrl] = useState(song2.url);
+    const [imageUrl, setImageUrl] = useState(song2.imageUrl);
+    const [albumId, setAlbumId] = useState(song2.albumId)
+    const [errors, setErrors] = useState([]);
+   
+    
 
     
   
@@ -26,6 +27,7 @@ function UpdateSongPage() {
       e.preventDefault();
       setErrors([]);
       song = {
+        id: song2.id,
         title,
         description,
         url,
