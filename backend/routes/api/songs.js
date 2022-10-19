@@ -176,6 +176,7 @@ router.put('/:songId', requireAuth, async (req, res, next) => {
     song.url = url;
     song.imageUrl = imageUrl;
 
+    await song.save();
     return res.json(song);
 })
 
