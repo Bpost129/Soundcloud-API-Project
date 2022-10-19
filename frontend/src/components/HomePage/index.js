@@ -25,9 +25,10 @@ function HomePage() {
                 {songs.map((song) => {
                     return (
                         <div key={song.id} className='song'>
-                            <a href={`/songs/${song.id}`}> <img alt='song' src={song.imageUrl}></img> </a>
+                            {/* <a href={`/songs/${song.id}`}> </a> */}
+                            <img alt='song' src={song.imageUrl}></img> 
                             <div className='song name'>{song.title}</div>
-                            {/* <Link to={`/songs/${song.id}`}>Info</Link> */}
+                            <Link to={`/songs/${song.id}`}>Info</Link>
                         </div>
                     )
                 })}
