@@ -5,7 +5,7 @@ import { editSong } from "../../store/song";
 // import './UploadSong.css';
 
 function UpdateSongPage({ song }) {
-    // const history = useHistory();
+    const history = useHistory();
     const dispatch = useDispatch();
     // const seshsong = useSelector((state) => state.song);
     // const song = useSelector(state => state.songs[songId]);
@@ -30,13 +30,13 @@ function UpdateSongPage({ song }) {
         albumId,
       }
 
-      dispatch(editSong(song))
+      let editedSong = await dispatch(editSong(song))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
 
-    //   history.push(`/api/songs/${song.id}`)
+      history.push(`/songs/${editedSong.id}`)
     };
 
 // if (seshsong) return <Redirect to="/" />;
@@ -85,7 +85,7 @@ function UpdateSongPage({ song }) {
         <label>
           Album ID
           <input
-            type="text"
+            type="number"
             value={albumId}
             onChange={(e) => setAlbumId(e.target.value)}
           />

@@ -9,18 +9,18 @@ const SingleSongPage = () => {
     const { songId } = useParams();
     const song = useSelector(state => state.songs[songId]);
 
-    const changeSong = async (e) => {
-        // e.preventDefault();
-        // dispatch(editSong(song.id))
-        history.push(`/songs/${songId}/update`)
-    }
+    
 
     const removeaSong = async (e) => {
         e.preventDefault();
         dispatch(removeSong(song.id))
         history.push("/")
     }
-   
+    const changeSong = async (e) => {
+        // e.preventDefault();
+        // dispatch(editSong(song.id))
+        history.push(`/songs/${songId}/update`)
+    }
     // if (!song) return (
     //     <Redirect to="/" />
     //   );
