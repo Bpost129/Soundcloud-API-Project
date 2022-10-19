@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import { editSong } from "../../store/song";
-// import './UploadSong.css';
+import './UpdateSong.css';
 
-function UpdateSongPage({ song }) {
+function UpdateSongPage() {
     const history = useHistory();
     const dispatch = useDispatch();
+    
     // const seshsong = useSelector((state) => state.song);
     // const song = useSelector(state => state.songs[songId]);
     const [title, setTitle] = useState("");
@@ -15,7 +16,9 @@ function UpdateSongPage({ song }) {
     const [imageUrl, setImageUrl] = useState("");
     const [albumId, setAlbumId] = useState("")
     const [errors, setErrors] = useState([]);
-  
+    const { songId } = useParams();
+    let song = useSelector(state => state.songs[songId]);
+
     
   
     // handle submit for uploading song (dispatch thunk with new entry)
@@ -27,7 +30,7 @@ function UpdateSongPage({ song }) {
         description,
         url,
         imageUrl,
-        albumId,
+        albumId: albumId === "" ? null : Number(albumId),
       }
 
       let editedSong = await dispatch(editSong(song))

@@ -37,12 +37,13 @@ function App() {
           {/* <Route path="/signup">
             <SignupFormPage />
           </Route> */}
-          <Route path="/songs/:songId">
-            <SingleSongPage />
-          </Route>
           <Route path="/songs/:songId/update">
             <UpdateSongPage />
           </Route>
+          <Route path="/songs/:songId">
+            <SingleSongPage />
+          </Route>
+          
         </Switch>
         
       )}
