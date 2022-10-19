@@ -52,6 +52,7 @@ function UpdateSongPage({ song }) {
           <input
             type="text"
             value={title}
+            placeholder={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
@@ -61,6 +62,7 @@ function UpdateSongPage({ song }) {
           <input
             type="text"
             value={description}
+            placeholder={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
@@ -70,6 +72,7 @@ function UpdateSongPage({ song }) {
           <input
             type="text"
             value={url}
+            placeholder={url}
             onChange={(e) => setUrl(e.target.value)}
             required
           />
@@ -79,6 +82,7 @@ function UpdateSongPage({ song }) {
           <input
             type="text"
             value={imageUrl}
+            placeholder={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
           />
         </label>
@@ -87,6 +91,7 @@ function UpdateSongPage({ song }) {
           <input
             type="number"
             value={albumId}
+            placeholder={albumId}
             onChange={(e) => setAlbumId(e.target.value)}
           />
         </label>

@@ -15,9 +15,9 @@ function UploadSongPage({ song }) {
     const [albumId, setAlbumId] = useState("")
     const [errors, setErrors] = useState([]);
   
-    useEffect(() => {
-      console.log(albumId)
-    }, [albumId]); 
+    // useEffect(() => {
+    //   console.log(albumId)
+    // }, [albumId]); 
   
     // handle submit for uploading song (dispatch thunk with new entry)
     const handleSubmit = async (e) => {

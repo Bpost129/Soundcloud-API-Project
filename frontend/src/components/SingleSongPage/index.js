@@ -1,6 +1,7 @@
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSong, editSong } from '../../store/song';
+import UpdateSongPage from '../UpdateSongPage';
 import './SingleSongPage.css';
 
 const SingleSongPage = () => {
@@ -9,18 +10,19 @@ const SingleSongPage = () => {
     const { songId } = useParams();
     const song = useSelector(state => state.songs[songId]);
 
-    
+    const changeSong = async (e) => {
+        // e.preventDefault();
+        // dispatch(editSong(song.id))
+        history.push(`/songs/${songId}/update`)
+        // history.push(<UpdateSongPage />)
+    }
 
     const removeaSong = async (e) => {
         e.preventDefault();
         dispatch(removeSong(song.id))
         history.push("/")
     }
-    const changeSong = async (e) => {
-        // e.preventDefault();
-        // dispatch(editSong(song.id))
-        history.push(`/songs/${songId}/update`)
-    }
+    
     // if (!song) return (
     //     <Redirect to="/" />
     //   );
