@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getAllSongs } from '../../store/song'
 
 function HomePage() {
@@ -25,8 +25,8 @@ function HomePage() {
                 {songs.map((song) => {
                     return (
                         <div key={song.id} className='song'>
-                            {/* <a href={`/songs/${song.id}`}> </a> */}
-                            <img alt='song' src={song.imageUrl}></img> 
+                            {/* <a href={getSingleSong}>  </a> */}
+                            <img alt='song' src={song.imageUrl}></img>
                             <div className='song name'>{song.title}</div>
                             <Link to={`/songs/${song.id}`}>Info</Link>
                         </div>

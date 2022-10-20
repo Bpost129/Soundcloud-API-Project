@@ -48,6 +48,7 @@ function App() {
         
       )}
         <AudioPLayer
+          id="mainAudio"
           autoPlay
           src="https://www.free-stock-music.com/music/tubebackr-say-nothing.mp3"
           

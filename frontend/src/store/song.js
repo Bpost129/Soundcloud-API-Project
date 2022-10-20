@@ -1,6 +1,7 @@
 import { csrfFetch } from './csrf';
 
 const GET_SONGS = 'songs/getSongs';
+const GET_SONG = 'songs/getSong'
 const CREATE_SONG = 'songs/createSong';
 const UPDATE_SONG = 'songs/updateSong';
 const DELETE_SONG = 'songs/deleteSong';
@@ -12,6 +13,13 @@ const getSongs = (songs) => {
     songs
   };
 };
+
+const getSong = (song) => {
+  return {
+    type: GET_SONG,
+    song
+  }
+}
 
 // create a song action creator --> reducer
 const postSong = (song) => {
@@ -45,6 +53,14 @@ export const getAllSongs = () => async (dispatch) => {
         dispatch(getSongs(songs));
     }
   };
+
+export const getSingleSong = (id) => async (dispatch) => {
+  const response = await csrfFetch(`/api/songs/${id}`);
+  if (response.ok) {
+    const song = await response.json();
+    dispatch(getSong(song));
+  }
+}
 
 // create song thunk --> backend and back (send to upload page)
 export const createSong = (payload) => async (dispatch) => {
@@ -104,6 +120,21 @@ const songReducer = (state = initialState, action) => {
         const allSongs = {};
         action.songs.forEach((song) => {allSongs[song.id] = song})
         return allSongs;
+    case GET_SONG:
+        return {
+          ...newState,
+          [action.song.id]: {
+            ...state[action.song.id],
+            ...action.song
+          }
+        }
+
+
+
+
+        // const song = {};
+        // action.songs.forEach((song) => {allSongs[song.id] !== song.id ? null : 
+        // return song;
     case CREATE_SONG:
         newState[action.song.id] = action.song
         return newState;
@@ -112,7 +143,6 @@ const songReducer = (state = initialState, action) => {
           ...newState,
           [action.song.id]: action.song
         }
-
 
         // newState[action.song.id] = action.song
         // return newState;

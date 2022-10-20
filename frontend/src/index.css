@@ -18,6 +18,11 @@ h2 {
     padding: 5px;;
 }
 
+#mainAudio {
+    display: flex;
+    align-items: baseline;
+}
+
 body {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin: 0px 300px;

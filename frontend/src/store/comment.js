@@ -29,8 +29,9 @@ export const deleteComment = (id) => {
 };
 
 // get all songs thunk --> backend and back (send to home page)
-export const getAllComents = () => async (dispatch) => {
-    const response = await csrfFetch("/api/songs");
+export const getAllComents = (id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/songs/${id}/comments`);
+
     if (response.ok) {
         const comments = await response.json();
         dispatch(getComments(comments));
@@ -38,10 +39,10 @@ export const getAllComents = () => async (dispatch) => {
   };
 
 // create song thunk --> backend and back (send to upload page)
-export const createComment = (payload) => async (dispatch) => {
+export const createComment = (id, payload) => async (dispatch) => {
     // const { title, description, url, imageUrl } = song;
     // console.log('this is the payload before database:', payload);
-    const response = await csrfFetch("/api/songs", {
+    const response = await csrfFetch(`/api/songs/${id}/comments`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -56,7 +57,7 @@ export const createComment = (payload) => async (dispatch) => {
 
 // remove song thunk --> backend> (send to single song page)
 export const removeComment = (id) => async(dispatch) => {
-    const response = await csrfFetch(`/api/songs/${id}`, {
+    const response = await csrfFetch(`/api/comments/${id}`, {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" }
     });
@@ -80,7 +81,7 @@ const commentReducer = (state = initialState, action) => {
         action.comments.forEach((comment) => {allComments[comment.id] = comment})
         return allComments;
     case CREATE_COMMENT:
-        newState[action.commnet.id] = action.comment
+        newState[action.comment.id] = action.comment
         return newState;
     case DELETE_COMMENT:
         delete newState[action.id]
