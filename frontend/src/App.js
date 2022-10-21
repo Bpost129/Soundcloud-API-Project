@@ -17,8 +17,11 @@ import { getAllSongs } from './store/song'
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [trackId, setTrackId] = useState(0);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    dispatch(getAllSongs())
   }, [dispatch]);
 
   // audio player code
@@ -26,25 +29,42 @@ function App() {
 
   const songState = useSelector((state) => state.songs)
   const songs = Object.values(songState);
+  // const tracks =  songs.map((song) => tracks[song.id] = song.url)
+  // useEffect(() => {
+  //     dispatch(getAllSongs())
+  // }, [dispatch])
 
-  useEffect(() => {
-      dispatch(getAllSongs())
-  }, [dispatch])
-
-
-  // const tracks = [
-  //   {
-  //       name: "tech house",
-  //       src: "https://assets.mixkit.co/music/download/mixkit-tech-house-vibes-130.mp3"
-  //   }
-  // ]
-  const [trackId, setTrackId] = useState(0);
+  const tracks = [
+    {
+        name: "tech house",
+        src: "https://assets.mixkit.co/music/download/mixkit-tech-house-vibes-130.mp3"
+    },
+    {
+        name: "Hazy after hours",
+        src: "https://assets.mixkit.co/music/download/mixkit-hazy-after-hours-132.mp3"
+    },
+    {
+        name: "Raising me higher",
+        src: "https://assets.mixkit.co/music/download/mixkit-raising-me-higher-34.mp3"
+    },
+    {
+        name: "C.B.P.D",
+        src: "https://assets.mixkit.co/music/download/mixkit-cbpd-400.mp3"
+    }
+  ]
 
   const handleClickNext = () => {
-    setTrackId((currentTrack) =>
-      currentTrack < songs.length - 1 ? currentTrack + 1 : 0
+    setTrackId((currentTrack) => {
+      if (currentTrack < songs.length - 1) {
+        currentTrack += 1
+      } else if (currentTrack = songs.length - 1) {
+        currentTrack = 0;
+      }
+    }
+      
     );
   };
+  
   // const Player = () => (
   //   <AudioPlayer
   //     autoPlay
@@ -84,9 +104,10 @@ function App() {
         {/* <Player /> */}
         <div>
           <AudioPlayer
-            src={songs[trackId].src}
+            src={tracks[trackId].src}
             autoPlay
-            controls
+            showSkipControls={true}
+            showJumpControls={false}
             onClickNext={handleClickNext}
           />
         </div>
