@@ -51,7 +51,7 @@ const SingleSongPage = () => {
                 <button onClick={changeSong}>Update</button>   
                 <button onClick={removeaSong}>Delete</button>
             </div>
-            <CommentSection />
+            <CommentSection song={song}/>
         </div>
     );
 }

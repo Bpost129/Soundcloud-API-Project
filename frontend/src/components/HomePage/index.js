@@ -26,7 +26,7 @@ function HomePage() {
                     return (
                         <div key={song.id} className='song'>
                             {/* <a href={getSingleSong}>  </a> */}
-                            <img alt='song' src={song.imageUrl}></img>
+                            <img alt='song' src={song.imageUrl} style={{ maxHeight: "200px", maxWidth: "200px"}}></img>
                             <div className='song name'>{song.title}</div>
                             <Link to={`/songs/${song.id}`}>Info</Link>
                         </div>

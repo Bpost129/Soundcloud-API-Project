@@ -19,15 +19,21 @@ router.post('/:songId/comments', restoreUser, requireAuth, async (req, res, next
         }
     })
 
+    let comment = await Comment.create({
+            userId: id,
+            songId,
+            body
+        });
+
+        comment = comment.toJSON();
+
     if (!song) {
         res.status = 404;
-        res.json({
+        return res.json({
             "message": "Song couldn't be found",
             "statusCode": 404
         })
-    }
-
-    if (!body) {
+    } else if (!body) {
         res.status = 400;
         res.json({
             "message": "Validation error",
@@ -36,17 +42,13 @@ router.post('/:songId/comments', restoreUser, requireAuth, async (req, res, next
                 "body": "Comment body text is required"
             }
         })
+    } else {
+        return res.json(comment);
     }
 
-    let comment = await Comment.create({
-        userId: id,
-        songId,
-        body
-    });
+    
 
-    comment = comment.toJSON();
-
-    return res.json(comment);
+    
 })
 
 // Get all comments of a song by its id ----------------------------

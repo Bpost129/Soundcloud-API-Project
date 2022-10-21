@@ -5,7 +5,7 @@ import { getAllComents, createComment, removeComment } from '../../store/comment
 // import { getSingleSong } from '../../store/song'
 // import './SingleSongPage.css';
 
-const CommentSection = () => {
+const CommentSection = ({ song }) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -19,11 +19,16 @@ const CommentSection = () => {
     const commentState = useSelector((state) => state.comments)
     const comments = Object.values(commentState);
     // const song = songs[songId]
+    
 
-    // useEffect(() => {
-    //     dispatch(getAllComents())
-    // }, [dispatch])
-
+    // const songComments = useSelector((state) => {
+    //     return song.comments.map(commentId => state.comments[commentId])
+    // })
+    
+    useEffect(() => {
+        dispatch(getAllComents(song.id))
+    }, [dispatch, song.id])
+    
     const createaComment = async (e) => {
         e.preventDefault();
         setErrors([]);
@@ -31,7 +36,7 @@ const CommentSection = () => {
             body
         }
 
-        let newComment = await dispatch(createComment(comment))
+        let newComment = await dispatch(createComment(song.id, comment))
           .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);
@@ -40,15 +45,12 @@ const CommentSection = () => {
         console.log(newComment);
     }
 
-    const removeaComment = async (e) => {
-        e.preventDefault();
-        dispatch(removeComment(comment.id))
-        history.push("/")
-    }
+    // const removeaComment = async (e) => {
+    //     e.preventDefault();
+    //     dispatch(removeComment(comment.id))
+    //     // history.push("/")
+    // }
     
-    // if (!song) return (
-    //     <Redirect to="/" />
-    //   );
 
     return (
         <div id="commentSection">
@@ -71,7 +73,7 @@ const CommentSection = () => {
                         return (
                             <div key={comment.id} id="singleComment">
                                 <li>{comment.body}</li>
-                                <button onClick={removeaComment}>Delete</button>
+                                <button onClick={() => dispatch(removeComment(comment.id))}>Delete</button>
                             </div>  
                         )
                     })}

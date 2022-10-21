@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 
-import AudioPLayer from 'react-h5-audio-player';
+import AudioPlayer from 'react-h5-audio-player';
+// import PlayerApp from "./components/AudioPlayer";
+// import ReactAudioPlayer from 'react-audio-player';
 
 import HomePage from "./components/HomePage"
-// import LoginFormPage from "./components/LoginFormModal";
-// import SignupFormPage from "./components/SignupFormModal";
 import UploadSongPage from "./components/UploadSongPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
@@ -19,6 +19,24 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+
+  const tracks = [
+    {
+        name: "stay chilled",
+        src: "https://tunetank-production.s3.us-west-2.amazonaws.com/tracks/2161/versions/1324.mp3?AWSAccessKeyId=AKIAVRNTQNFKJKL4O7VE&Expires=1666385286&Signature=wttwGVAXq7Nv7S3a8yyt%2FjUEmhc%3D&response-content-disposition=attachment%3Bfilename%3Dtunetank.com_2161_stay-chilled_by_pillowvibes.mp3"
+    }
+  ]
+  const [trackId, setTrackId] = useState(0);
+
+  // const Player = () => (
+  //   <AudioPlayer
+  //     autoPlay
+  //     src="https://www.free-stock-music.com/music/tubebackr-say-nothing.mp3"
+  //     onPlay={e => console.log("onPlay")}
+  //     // other props here
+  //   />
+  // );
 
   return (
     <>
@@ -47,12 +65,15 @@ function App() {
         </Switch>
         
       )}
-        <AudioPLayer
-          id="mainAudio"
-          autoPlay
-          src="https://www.free-stock-music.com/music/tubebackr-say-nothing.mp3"
-          
-        />
+        {/* <Player /> */}
+        <div>
+          <AudioPlayer
+            src={tracks[trackId].src}
+            autoPlay
+            controls
+          />
+        </div>
+        
     </>
   );
 }
