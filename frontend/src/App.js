@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 
 import AudioPlayer from 'react-h5-audio-player';
@@ -12,6 +12,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SingleSongPage from "./components/SingleSongPage";
 import UpdateSongPage from "./components/UpdateSongPage";
+import { getAllSongs } from './store/song'
 
 function App() {
   const dispatch = useDispatch();
@@ -20,15 +21,30 @@ function App() {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
+  // audio player code
 
-  const tracks = [
-    {
-        name: "stay chilled",
-        src: "https://tunetank-production.s3.us-west-2.amazonaws.com/tracks/2161/versions/1324.mp3?AWSAccessKeyId=AKIAVRNTQNFKJKL4O7VE&Expires=1666385286&Signature=wttwGVAXq7Nv7S3a8yyt%2FjUEmhc%3D&response-content-disposition=attachment%3Bfilename%3Dtunetank.com_2161_stay-chilled_by_pillowvibes.mp3"
-    }
-  ]
+
+  const songState = useSelector((state) => state.songs)
+  const songs = Object.values(songState);
+
+  useEffect(() => {
+      dispatch(getAllSongs())
+  }, [dispatch])
+
+
+  // const tracks = [
+  //   {
+  //       name: "tech house",
+  //       src: "https://assets.mixkit.co/music/download/mixkit-tech-house-vibes-130.mp3"
+  //   }
+  // ]
   const [trackId, setTrackId] = useState(0);
 
+  const handleClickNext = () => {
+    setTrackId((currentTrack) =>
+      currentTrack < songs.length - 1 ? currentTrack + 1 : 0
+    );
+  };
   // const Player = () => (
   //   <AudioPlayer
   //     autoPlay
@@ -68,9 +84,10 @@ function App() {
         {/* <Player /> */}
         <div>
           <AudioPlayer
-            src={tracks[trackId].src}
+            src={songs[trackId].src}
             autoPlay
             controls
+            onClickNext={handleClickNext}
           />
         </div>
         
