@@ -1,5 +1,8 @@
 #commentSection {
-    margin-right: 800px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 25px;
+    margin-right: 45%;
 }
 
 #commentInputDiv {

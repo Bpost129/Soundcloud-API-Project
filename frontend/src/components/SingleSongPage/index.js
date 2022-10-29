@@ -37,7 +37,7 @@ const SingleSongPage = () => {
     //   );
 
     return (
-        <div class="Page" id="singleSongComps"> 
+        <div class="songPage" id="singleSongComps"> 
             <div id="singleSong">
                 <div id="songContent">
                     <div id="songTitle">Title: {song.title}</div>
@@ -51,8 +51,8 @@ const SingleSongPage = () => {
                     src={song.url}
                 ></audio> */}
                         {/* not actually the right solution */}
-                <button onClick={changeSong}>Update</button>   
-                <button onClick={removeaSong}>Delete</button>
+                <button id="editButton" onClick={changeSong}>Update</button>   
+                <button id="deleteButton" onClick={removeaSong}>Delete</button>
             </div>
             <CommentSection song={song}/>
         </div>

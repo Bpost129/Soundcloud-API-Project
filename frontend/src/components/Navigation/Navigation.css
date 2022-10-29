@@ -11,17 +11,20 @@
     align-items: stretch;
     justify-content: space-between;
     padding: 5px;
-    margin-left: 22%;
-    margin-right: 22%;
+    margin-left: 25%;
+    margin-right: 25%;
     top: 0px;
 
     font-size: 14px;
     color: lightgray;
+    
 }
 
 #homeLink {
     text-decoration: none;
     color: lightgray;
+    /* padding-right: 100px;
+    border-right: 1px solid black; */
 }
 
 #uploadLink{
