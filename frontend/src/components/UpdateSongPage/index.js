@@ -18,10 +18,9 @@ function UpdateSongPage({ song }) {
     const [albumId, setAlbumId] = useState(song2.albumId)
     const [errors, setErrors] = useState([]);
    
-    
+    // useEffect for validation errors
 
-    
-  
+
     // handle submit for uploading song (dispatch thunk with new entry)
     const handleSubmit = async (e) => {
       e.preventDefault();

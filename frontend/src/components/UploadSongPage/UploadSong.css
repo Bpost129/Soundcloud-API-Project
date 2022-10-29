@@ -6,3 +6,33 @@
     flex-direction: column;
     padding: 10px;
 }
+
+label {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+#uploadSongButton {
+    margin-top: 20px;
+    height: 35px;
+    width: 150px;
+    background-color: rgb(255, 77, 0);
+    color: white;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+}
+
+input {
+    width: 300px;
+    height: 18px;
+    margin-top: 3px;
+}
+/* body {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 5px;
+    margin-left: 18%;
+    margin-right: 18%;
+} */

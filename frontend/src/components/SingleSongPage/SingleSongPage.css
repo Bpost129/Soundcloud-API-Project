@@ -1,8 +1,25 @@
-#singleSong {
+/* #singleSong {
     
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     padding: 10px;
+} */
+
+#songContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: gray;
+}
+
+#songTitle {
+    display: flex;
+    background-color: black;
+    color: white;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 15%;
+    padding: 5px
 }

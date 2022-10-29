@@ -15,6 +15,8 @@ function LoginForm() {
 //     <Redirect to="/" />
 //   );
 
+  // useEffect for validation errors
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);

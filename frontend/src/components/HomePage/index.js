@@ -18,15 +18,15 @@ function HomePage() {
     if (!songState) return null
 
   return ( 
-    <div>
-        <div>
+    <div >
+        <div class="Page">
             <h2>Songs</h2>
             <div id="songDiv">
                 {songs.map((song) => {
                     return (
                         <div key={song.id} className='song'>
                             {/* <a href={getSingleSong}>  </a> */}
-                            <img alt='song' src={song.imageUrl} style={{ maxHeight: "200px", maxWidth: "200px"}}></img>
+                            <img alt='song' src={song.imageUrl} style={{ maxHeight: "176px", maxWidth: "176px"}}></img>
                             <div className='song name'>{song.title}</div>
                             <Link to={`/songs/${song.id}`}>Info</Link>
                         </div>

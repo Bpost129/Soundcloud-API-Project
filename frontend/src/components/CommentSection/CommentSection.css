@@ -1,0 +1,35 @@
+#commentSection {
+    margin-right: 800px;
+}
+
+#commentInputDiv {
+    background-color: lightgray;
+    padding-left: 5px;
+    border-radius: 2px;
+}
+
+#commentInput {
+    width: 372px;
+    height: 18px;
+}
+
+#commentSubmitButton {
+    margin: 5px;
+    height: 24px;
+}
+
+#singleComment {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#deleteCommentButton{
+    margin: 5px;
+}
+
+#commentBody {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,16 +1,40 @@
 #navUl {
-    padding: 10px;
-    background-color: grey;
+    padding: 5px;
+    background-color: rgb(63, 63, 63);
+    position: sticky;
+    top: 0px;
+    margin: 0px;
 }
 
 #navUl > li {
     display: flex;
     align-items: stretch;
-
     justify-content: space-between;
     padding: 5px;
-    /* margin: 0px 150px; */
-    
+    margin-left: 22%;
+    margin-right: 22%;
+    top: 0px;
+
+    font-size: 14px;
+    color: lightgray;
+}
+
+#homeLink {
+    text-decoration: none;
+    color: lightgray;
+}
+
+#uploadLink{
+    text-decoration: none;
+    color: lightgray;
+}
+
+#homeLink:hover {
+    color: white;
+}
+
+#uploadLink:hover {
+    color: white;
 }
 
 /* #uploadLink {

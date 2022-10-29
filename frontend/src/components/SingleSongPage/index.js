@@ -21,10 +21,11 @@ const SingleSongPage = () => {
     }, [dispatch, songId])
 
 
+    // need user permissions
     const changeSong = async (e) => {
         history.push(`/songs/${songId}/update`)
     }
-
+    
     const removeaSong = async (e) => {
         e.preventDefault();
         dispatch(removeSong(song.id))
@@ -36,10 +37,12 @@ const SingleSongPage = () => {
     //   );
 
     return (
-        <div id="singleSongComps"> 
+        <div class="Page" id="singleSongComps"> 
             <div id="singleSong">
-                <img alt='song' src={song.imageUrl}></img>
-                <div>Title: {song.title}</div>
+                <div id="songContent">
+                    <div id="songTitle">Title: {song.title}</div>
+                    <img alt='song' src={song.imageUrl} style={{ margin: "20px", maxHeight: "300px", maxWidth: "300px"}}></img>
+                </div>
                 <div>Description: {song.description}</div>
                 <a href={song.url}>URL</a>
 

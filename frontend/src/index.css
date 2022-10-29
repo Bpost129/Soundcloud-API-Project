@@ -10,20 +10,56 @@ h2 {
 #songDiv {
     display: flex;
     flex-direction: row;
-    overflow: scroll;
-    background-color: lightgrey;
+    overflow-y: hidden;
+    /* background-color: lightgrey; */
+    padding: 5px;
+    padding-left: 0px;
 }
 
 .song {
-    padding: 5px;;
+    padding: 8px;
+    
 }
 
 #mainAudio {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    justify-content: center;
+    bottom: 0px;   
 }
 
 body {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    margin: 0px 300px;
+    background-color: rgb(240, 240, 240);
+    margin: 0px;
+    /* margin-left: 18%;
+    margin-right: 18%; */
 }
+
+.Page {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center;
+    justify-content: center; */
+    padding: 25px;
+    margin-left: 22%;
+    margin-right: 22%;
+    bottom: 0px;
+    background-color: white;
+}
+/* #mainNav {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 5px;
+    margin-left: 0%;
+    margin-right: 0%;
+} */
+/* #mainContent a {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 5px;
+    margin-left: 18%;
+    margin-right: 18%;
+} */

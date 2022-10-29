@@ -3,7 +3,7 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllComents, createComment, removeComment } from '../../store/comment';
 // import { getSingleSong } from '../../store/song'
-// import './SingleSongPage.css';
+import './CommentSection.css';
 
 const CommentSection = ({ song }) => {
     const history = useHistory();
@@ -29,6 +29,8 @@ const CommentSection = ({ song }) => {
         dispatch(getAllComents(song.id))
     }, [dispatch, song.id])
     
+
+    // need signed in permission
     const createaComment = async (e) => {
         e.preventDefault();
         setErrors([]);
@@ -58,22 +60,26 @@ const CommentSection = ({ song }) => {
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
-                <input
-                type="text"
-                value={body}
-                placeholder="Enter your comment here"
-                onChange={(e) => setBody(e.target.value)}
-                required
-                />
-                <button type="submit">Post</button>
+                <div id="commentInputDiv">
+                    <input
+                    id="commentInput"
+                    type="text"
+                    value={body}
+                    placeholder="Enter your comment here"
+                    onChange={(e) => setBody(e.target.value)}
+                    required
+                    />
+                    <button id="commentSubmitButton" type="submit">Post</button>
+                </div>
+                
             </form>
             <div id="listedComments">
                 <ul>
                     {comments.map((comment) => {
                         return (
                             <div key={comment.id} id="singleComment">
-                                <li>{comment.body}</li>
-                                <button onClick={() => dispatch(removeComment(comment.id))}>Delete</button>
+                                <li id="commentBody">{comment.body}</li>
+                                <button id="deleteCommentButton" onClick={() => dispatch(removeComment(comment.id))}>Delete</button>
                             </div>  
                         )
                     })}

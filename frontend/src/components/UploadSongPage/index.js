@@ -16,9 +16,11 @@ function UploadSongPage({ song }) {
     const [errors, setErrors] = useState([]);
   
     // useEffect(() => {
-    //   console.log(albumId)
+    //   // validation errors
     // }, [albumId]); 
   
+    // need signed in permissions
+
     // handle submit for uploading song (dispatch thunk with new entry)
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -43,7 +45,7 @@ function UploadSongPage({ song }) {
 // if (seshsong) return <Redirect to="/" />;
   
     return (
-      <div>
+      <div class="Page">
       <form id="uploadSongForm" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -91,7 +93,7 @@ function UploadSongPage({ song }) {
             onChange={(e) => setAlbumId(e.target.value)}
           />
         </label>
-        <button type="submit">Submit</button>
+        <button id="uploadSongButton" type="submit">Submit</button>
       </form>
       </div>
       

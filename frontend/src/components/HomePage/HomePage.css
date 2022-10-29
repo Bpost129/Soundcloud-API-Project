@@ -1,0 +1,9 @@
+.Page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-left: 18%;
+    margin-right: 18%;
+    background-color: white;
+}

@@ -76,9 +76,9 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation id="mainNav" isLoaded={isLoaded} />
       {isLoaded && (
-        <Switch>
+        <Switch id="mainContent">
           <Route exact path="/">
             <HomePage />
           </Route>
@@ -103,7 +103,7 @@ function App() {
       )}
         {/* <Player /> */}
         <div>
-          <AudioPlayer
+          <AudioPlayer id="mainAudio"
             src={tracks[trackId].src}
             autoPlay
             showSkipControls={true}

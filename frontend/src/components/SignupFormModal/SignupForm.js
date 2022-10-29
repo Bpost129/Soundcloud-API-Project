@@ -17,6 +17,8 @@ function SignupForm() {
 
 //   if (sessionUser) return <Redirect to="/" />;
 
+  // useEffect for validation errors
+
   // handle submit for signup (dispatch thunk with new entry)
   const handleSubmit = (e) => {
     e.preventDefault();
