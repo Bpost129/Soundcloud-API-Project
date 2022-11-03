@@ -37,7 +37,7 @@ const SingleSongPage = () => {
     //   );
 
     return (
-        <div class="songPage" id="singleSongComps"> 
+        <div className="songPage" id="singleSongComps"> 
             <div id="singleSong">
                 <div id="songContent">
                     <div id="songTitle">Title: {song.title}</div>

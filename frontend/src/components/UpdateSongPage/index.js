@@ -46,7 +46,8 @@ function UpdateSongPage({ song }) {
 // if (seshsong) return <Redirect to="/" />;
   
     return (
-      <div>
+      <div className="Page">
+        <h2 id="updateHeader">Edit Your Song!</h2>
       <form id="updateSongForm" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -99,7 +100,7 @@ function UpdateSongPage({ song }) {
             onChange={(e) => setAlbumId(e.target.value)}
           />
         </label>
-        <button type="submit">Submit</button>
+        <button id="updateSongButton" type="submit">Submit</button>
       </form>
       </div>
       

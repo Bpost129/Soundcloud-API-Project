@@ -13,6 +13,7 @@ import Navigation from "./components/Navigation";
 import SingleSongPage from "./components/SingleSongPage";
 import UpdateSongPage from "./components/UpdateSongPage";
 import { getAllSongs } from './store/song'
+import "react-h5-audio-player/lib/styles.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +38,8 @@ function App() {
   const tracks = [
     {
         name: "tech house",
-        src: "https://assets.mixkit.co/music/download/mixkit-tech-house-vibes-130.mp3"
+        src: "https://assets.mixkit.co/music/download/mixkit-tech-house-vibes-130.mp3",
+        url: "https://www.free-stock-music.com/thumbnails/tubebackr-keep-me.jpg"
     },
     {
         name: "Hazy after hours",
@@ -57,7 +59,7 @@ function App() {
     setTrackId((currentTrack) => {
       if (currentTrack < songs.length - 1) {
         currentTrack += 1
-      } else if (currentTrack = songs.length - 1) {
+      } else if (currentTrack === songs.length - 1) {
         currentTrack = 0;
       }
     }
@@ -105,7 +107,9 @@ function App() {
         <div>
           <AudioPlayer id="mainAudio"
             src={tracks[trackId].src}
+            style={{ position: "fixed", textAlign:"center", bottom: "0px", paddingRight: "26%", paddingLeft: "26%", backgroundColor: "rgb(240, 240, 240)", borderTop: ".8px solid rgb(150, 150, 150)", boxShadow: "none"}}
             autoPlay
+            header={`Now Playing: ${tracks[trackId].name}`}
             showSkipControls={true}
             showJumpControls={false}
             onClickNext={handleClickNext}

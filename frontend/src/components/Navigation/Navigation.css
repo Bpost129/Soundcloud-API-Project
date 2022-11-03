@@ -40,6 +40,29 @@
     color: white;
 }
 
+#profile-button {
+    background-color: white;
+    height: 24px;
+    width: 24px;
+    border-radius: 12px;
+}
+
+#profile-menu-housing {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 12%;
+}
+.profile-hover:hover {
+    color: white;
+}
+
+#profile-menu {
+    display: flex;
+    flex-direction: column;
+    
+}
 /* #uploadLink {
     display: flex;
     justify-content: start;

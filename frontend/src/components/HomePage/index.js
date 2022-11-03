@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllSongs } from '../../store/song'
+import './HomePage.css'
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -18,8 +19,8 @@ function HomePage() {
     if (!songState) return null
 
   return ( 
-    <div >
-        <div class="Page">
+    <div>
+        <div className="Page">
             <h2>Songs</h2>
             <div id="songDiv">
                 {songs.map((song) => {

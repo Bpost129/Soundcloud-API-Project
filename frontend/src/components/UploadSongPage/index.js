@@ -46,6 +46,7 @@ function UploadSongPage({ song }) {
   
     return (
       <div class="Page">
+        <h2 id="uploadHeader" >Upload a Song!</h2>
       <form id="uploadSongForm" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
