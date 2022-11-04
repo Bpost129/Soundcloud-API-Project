@@ -65,7 +65,7 @@ const CommentSection = ({ song }) => {
                     id="commentInput"
                     type="text"
                     value={body}
-                    placeholder="Enter your comment here"
+                    placeholder="Write a comment"
                     onChange={(e) => setBody(e.target.value)}
                     required
                     />
@@ -79,7 +79,7 @@ const CommentSection = ({ song }) => {
                         return (
                             <div key={comment.id} id="singleComment">
                                 <li id="commentBody">{comment.body}</li>
-                                <button id="deleteCommentButton" onClick={() => dispatch(removeComment(comment.id))}>Delete</button>
+                                <button id="deleteCommentButton" onClick={() => dispatch(removeComment(comment.id))}><i class="fa-solid fa-trash"></i></button>
                             </div>  
                         )
                     })}

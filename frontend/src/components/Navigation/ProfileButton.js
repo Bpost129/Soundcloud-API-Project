@@ -31,12 +31,20 @@ function ProfileButton({ user }) {
   return (
     <>
     <div id="profile-menu">
-      <div className="profile-hover" id="profile-menu-housing" onClick={openMenu}>
+      <div id="profile-menu-housing" onClick={openMenu}>
         <div id="profile-button" >
           <i className="fas fa-user-circle" />
+          <div className="profile-hover">
+            <div>{user.username}</div>
+            <div>
+              <i class="fa-duotone fa-angle-down"></i>
+            </div>
+          </div>
+          
         </div>
-        <div >{user.username}</div>
-        <div >⌄</div>
+        
+        
+        
       </div>
       
       

@@ -37,22 +37,20 @@ const SingleSongPage = () => {
     //   );
 
     return (
-        <div className="songPage" id="singleSongComps"> 
+        <div class="Page" id="singleSongComps"> 
             <div id="singleSong">
                 <div id="songContent">
-                    <div id="songTitle">Title: {song.title}</div>
-                    <img alt='song' src={song.imageUrl} style={{ margin: "20px", maxHeight: "300px", maxWidth: "300px"}}></img>
-                </div>
-                <div>Description: {song.description}</div>
-                <a href={song.url}>URL</a>
 
-                {/* <audio 
-                    controls
-                    src={song.url}
-                ></audio> */}
+                    <div id="songTitle">{song.title}</div>
+                    <div id="songDescription">{song.description}</div>
+                    <img alt='song' src={song.imageUrl} style={{ position: "unset", right: "20em", margin: "20px", maxHeight: "300px", maxWidth: "300px"}}></img>
+                </div>
                         {/* not actually the right solution */}
-                <button id="editButton" onClick={changeSong}>Update</button>   
-                <button id="deleteButton" onClick={removeaSong}>Delete</button>
+                <div id="songButtons">
+                    <button id="spUpdateSongButton" onClick={changeSong}> <i class="fa-solid fa-pen-to-square" style={{marginRight: "3px"}}></i> Update</button>   
+                    <button id="deleteSongButton" onClick={removeaSong}> <i class="fa-solid fa-trash" style={{marginRight: "3px"}}></i> Delete</button>
+                </div>
+                
             </div>
             <CommentSection song={song}/>
         </div>

@@ -107,13 +107,20 @@ function App() {
         <div>
           <AudioPlayer id="mainAudio"
             src={tracks[trackId].src}
-            style={{ position: "fixed", textAlign:"center", bottom: "0px", paddingRight: "26%", paddingLeft: "26%", backgroundColor: "rgb(240, 240, 240)", borderTop: ".8px solid rgb(150, 150, 150)", boxShadow: "none"}}
+            style={{ position: "fixed", textAlign:"right", bottom: "0px", paddingRight: "26%", paddingLeft: "26%", backgroundColor: "rgb(240, 240, 240)", borderTop: ".8px solid rgb(150, 150, 150)", boxShadow: "none"}}
             autoPlay
-            header={`Now Playing: ${tracks[trackId].name}`}
+            // header={`Now Playing: ${tracks[trackId].name}`}
             showSkipControls={true}
             showJumpControls={false}
+            showLoopControls={false}
+            showFilledVolume={true}
             onClickNext={handleClickNext}
+            layout={"horizontal-reverse"}
+            loop={false}
+            volume={0.5}
+            // name={tracks[trackId].name}
           />
+          {/* <div>{tracks[trackId].name}</div> */}
         </div>
         
     </>
