@@ -1,5 +1,5 @@
 #navUl {
-    padding: 5px;
+    /* padding: 5px; */
     background-color: rgb(63, 63, 63);
     position: sticky;
     top: 0px;
@@ -8,7 +8,7 @@
 
 #navUl > li {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: space-between;
     padding: 5px;
     margin-left: 25%;
@@ -38,6 +38,16 @@
 
 #uploadLink:hover {
     color: rgb(250, 115, 45);
+}
+
+#homeLink:focus {
+    color: white;
+    background-color: black;
+}
+
+#uploadLink:focus {
+    color: rgb(250, 115, 45);
+    background-color: black;
 }
 
 #profile-button {
@@ -71,6 +81,10 @@
     width: 10em;
 }
 
+#profile-menu-housing:focus {
+    background-color: black;
+}
+
 .profile-hover {
     display: flex;
     flex-direction: row;
@@ -81,6 +95,11 @@
 
 .profile-hover:hover {
     color: white;
+}
+
+.profile-hover:focus {
+    color: white;
+    background-color: black;
 }
 
 #profile-menu {

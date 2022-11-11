@@ -103,7 +103,7 @@ export const removeSong = (id) => async(dispatch) => {
     }
 }
 
-const initialState = {};
+const initialState = { singleSong: {} };
 
 
 // song reducer --> index --> upload page & single song page & home page/App
@@ -117,9 +117,8 @@ const songReducer = (state = initialState, action) => {
     case GET_SONG:
         return {
           ...newState,
-          [action.song.id]: {
-            ...state[action.song.id],
-            ...action.song
+          singleSong: {
+            ...state[action.song.id]
           }
         }
         // const song = {};

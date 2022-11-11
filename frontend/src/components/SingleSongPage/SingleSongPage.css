@@ -58,9 +58,12 @@
     margin-top: 8px;
     margin-bottom: 0px;
     margin-left: 25px;
+    margin-right: 25px;
+    padding-bottom: 5px;
+    border-bottom: .5px solid lightgray;
 }
 
-#spUpdateSongButton{
+/* #spUpdateSongButton{
     margin: 5px;
     width: 75px;
     height: 26px;
@@ -70,7 +73,7 @@
     background-color: white;
     border: .5px solid lightgray;
     border-radius: 2px;
-}
+} */
 
 #deleteSongButton{
     margin: 5px;
@@ -88,6 +91,6 @@
     border: 1px solid lightgray;
 }
 
-#spUpdateSongButton:hover {
+/* #spUpdateSongButton:hover {
     border: 1px solid lightgray;
-}
+} */

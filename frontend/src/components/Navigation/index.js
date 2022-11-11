@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './Navigation.css';
+import logo from './images/soundwave.png';
 
 
 function Navigation({ isLoaded }){
@@ -27,6 +28,7 @@ function Navigation({ isLoaded }){
   return (
     <ul id="navUl">
       <li>
+        <img alt='soundwave' src={logo} style={{height:"30px", width:"30px"}}></img>        
         <NavLink id='homeLink' exact to="/">Home</NavLink>
         <NavLink id='uploadLink' to="/upload">Upload</NavLink>
         {isLoaded && sessionLinks}

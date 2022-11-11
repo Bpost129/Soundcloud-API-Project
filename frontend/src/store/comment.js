@@ -30,7 +30,7 @@ export const deleteComment = (commentId) => {
 };
 
 // get all songs thunk --> backend and back (send to home page)
-export const getAllComents = (songId) => async (dispatch) => {
+export const getAllComments = (songId) => async (dispatch) => {
     const response = await csrfFetch(`/api/songs/${songId}/comments`);
 
     if (response.ok) {
@@ -61,9 +61,7 @@ export const removeComment = (commentId) => async(dispatch) => {
         headers: { "Content-Type": "application/json" }
     });
     if (response.ok) {
-        const deleteId = await response.json();
-        dispatch(deleteComment(deleteId));
-        return deleteId;
+        dispatch(deleteComment(commentId));
     }
 }
 
@@ -84,8 +82,9 @@ const commentReducer = (state = initialState, action) => {
             [action.comment.id]: action.comment
         }
     case DELETE_COMMENT:
-        delete newState[action.commentId]
-        return newState
+        const newwState = { ...newState }
+        delete newwState[action.commentId]
+        return newwState
     default:
       return state;
   }

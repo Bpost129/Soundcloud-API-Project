@@ -11,7 +11,6 @@ import UploadSongPage from "./components/UploadSongPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SingleSongPage from "./components/SingleSongPage";
-import UpdateSongPage from "./components/UpdateSongPage";
 import { getAllSongs } from './store/song'
 import "react-h5-audio-player/lib/styles.css";
 
@@ -93,13 +92,13 @@ function App() {
           {/* <Route path="/signup">
             <SignupFormPage />
           </Route> */}
-          <Route path="/songs/:songId/update">
+          {/* <Route path="/songs/:songId/update">
             <UpdateSongPage />
-          </Route>
+          </Route> */}
           <Route path="/songs/:songId">
             <SingleSongPage />
           </Route>
-          
+          <Route>OH NO! Page Not Found!</Route>
         </Switch>
         
       )}

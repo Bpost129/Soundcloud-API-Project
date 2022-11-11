@@ -32,22 +32,17 @@ function ProfileButton({ user }) {
     <>
     <div id="profile-menu">
       <div id="profile-menu-housing" onClick={openMenu}>
+        
         <div id="profile-button" >
-          <i className="fas fa-user-circle" />
+          {user.imageUrl ? <img alt='userPreviewPic' src={user.imageUrl} style={{marginRight:"3px", height:"25px", width:"25px", borderRadius:"12px"}}></img> : <i className="fas fa-user-circle" /> }
           <div className="profile-hover">
-            <div>{user.username}</div>
-            <div>
-              <i class="fa-duotone fa-angle-down"></i>
-            </div>
+            <div style={{marginRight:"0px"}}>{user.username}</div>
+            <i style={{marginLeft:"0px"}} className="fa-duotone fa-angle-down"></i>
           </div>
-          
         </div>
         
-        
-        
       </div>
-      
-      
+        
       {showMenu && (
         <ul className="profile-dropdown">
           <li>{user.username}</li>

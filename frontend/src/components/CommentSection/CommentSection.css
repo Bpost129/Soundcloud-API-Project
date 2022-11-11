@@ -21,13 +21,27 @@
     height: 24px;
 }
 
+/* #listedComments {
+    display: flex;
+    margin-left: 0px;
+} */
+
 #singleComment {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content:flex-start;
+    align-items: center;
+    height: 28px;
+    margin-bottom: 15px;
 }
 
 #deleteCommentButton{
+    display: none;
+    right: -20px;
+}
+
+#singleComment:hover > #deleteCommentButton {
+    /* display: inline-block; */
     margin: 5px;
     width: 25px;
     height: 20px;
@@ -39,9 +53,11 @@
     border-radius: 2px;
 }
 
-#deleteCommentButton:hover {
+#singleComment:hover > #deleteCommentButton:hover {
     border: 1px solid lightgray;
 }
+
+
 
 #commentBody {
     display: flex;

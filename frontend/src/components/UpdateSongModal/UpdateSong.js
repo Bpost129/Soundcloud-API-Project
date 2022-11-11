@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editSong } from "../../store/song";
 import './UpdateSong.css';
+import { Modal } from "../../context/Modal";
 
-function UpdateSongPage({ song }) {
+function UpdateSong({ song }) {
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -17,7 +18,7 @@ function UpdateSongPage({ song }) {
     const [imageUrl, setImageUrl] = useState(song2.imageUrl);
     const [albumId, setAlbumId] = useState(song2.albumId)
     const [errors, setErrors] = useState([]);
-   
+    const [showModal, setShowModal] = useState(true);
     // useEffect for validation errors
 
 
@@ -40,14 +41,16 @@ function UpdateSongPage({ song }) {
           if (data && data.errors) setErrors(data.errors);
         });
 
-      history.push(`/songs/${editedSong.id}`)
+      setShowModal(false);
     };
 
 // if (seshsong) return <Redirect to="/" />;
   
+    if (!song2) return null;
+    
     return (
-      <div className="Page">
-        <h2 id="updateHeader">Edit Your Song!</h2>
+      <div>
+        <h2 id="updateHeader">Edit Your Song</h2>
       <form id="updateSongForm" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -100,11 +103,11 @@ function UpdateSongPage({ song }) {
             onChange={(e) => setAlbumId(e.target.value)}
           />
         </label>
-        <button id="updateSongButton" type="submit">Submit</button>
+        <button type="submit" id="submitUpdateSongButton">Submit</button>
       </form>
       </div>
       
     );
   }
   
-  export default UpdateSongPage;
+  export default UpdateSong;

@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSong } from '../../store/song';
-import { getSingleSong } from '../../store/song'
+import { getSingleSong, getAllSongs } from '../../store/song'
+import UpdateFormModal from '../UpdateSongModal';
 import './SingleSongPage.css';
 import CommentSection from '../CommentSection';
 
@@ -13,18 +14,19 @@ const SingleSongPage = () => {
     // const song = useSelector(state => state.songs[songId]);
 
     const song = useSelector((state) => state.songs[songId])
-    // const songs = Object.values(songState);
+    // const song = Object.values(song2);
     // const song = songs[songId]
 
-    useEffect(() => {
+    useEffect(() => {   
+        dispatch(getAllSongs())
         dispatch(getSingleSong(songId))
     }, [dispatch, songId])
 
 
     // need user permissions
-    const changeSong = async (e) => {
-        history.push(`/songs/${songId}/update`)
-    }
+    // const changeSong = async (e) => {
+    //     history.push(`/songs/${songId}/update`)
+    // }
     
     const removeaSong = async (e) => {
         e.preventDefault();
@@ -36,8 +38,10 @@ const SingleSongPage = () => {
     //     <Redirect to="/" />
     //   );
 
+    if (!song) return null;
+
     return (
-        <div class="Page" id="singleSongComps"> 
+        <div className="songPage" id="singleSongComps"> 
             <div id="singleSong">
                 <div id="songContent">
 
@@ -47,8 +51,8 @@ const SingleSongPage = () => {
                 </div>
                         {/* not actually the right solution */}
                 <div id="songButtons">
-                    <button id="spUpdateSongButton" onClick={changeSong}> <i class="fa-solid fa-pen-to-square" style={{marginRight: "3px"}}></i> Update</button>   
-                    <button id="deleteSongButton" onClick={removeaSong}> <i class="fa-solid fa-trash" style={{marginRight: "3px"}}></i> Delete</button>
+                    <UpdateFormModal />     
+                    <button id="deleteSongButton" onClick={removeaSong}> <i className="fa-solid fa-trash" style={{marginRight: "3px"}}></i> Delete</button>
                 </div>
                 
             </div>

@@ -34,6 +34,8 @@ function LoginForm() {
   }
 
   return ( 
+    <div>
+      <h2 id="loginHeader">Log In</h2>
     <form id="loginForm" onSubmit={handleSubmit}>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -56,9 +58,12 @@ function LoginForm() {
           required
         />
       </label>
-      <button type="submit">Log In</button>
-      <button type="submit" onClick={demoSubmit}>Demo User</button>
+      <div id="loginButtons">
+        <button type="submit" id="demoUserButton" onClick={demoSubmit}>Demo User</button>
+        <button type="submit" id="loginSubmitButton">Log In</button>
+      </div>
     </form>
+    </div>
   );
 }
 

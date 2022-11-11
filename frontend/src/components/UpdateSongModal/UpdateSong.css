@@ -7,10 +7,11 @@
     padding: 10px;
 }
 
-#updateSongButton {
+#submitUpdateSongButton {
     margin-top: 20px;
+    margin-bottom: 20px;
     height: 35px;
-    width: 150px;
+    width: 120px;
     background-color: rgb(255, 77, 0);
     color: white;
     border: 1px solid lightgray;
@@ -21,4 +22,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#displayUpdateSongButton{
+    margin: 5px;
+    width: 75px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: .5px solid lightgray;
+    border-radius: 2px;
+}
+
+#displayUpdateSongButton:hover {
+    border: 1px solid lightgray;
 }

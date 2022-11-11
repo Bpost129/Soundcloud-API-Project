@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
@@ -18,6 +18,15 @@ function SignupForm() {
 //   if (sessionUser) return <Redirect to="/" />;
 
   // useEffect for validation errors
+  useEffect(() => {
+    const errs = [];
+
+    if (!email.includes('@') && !email.includes('.')) {
+      errs.push("Must enter a valid email")
+    }
+    
+    setErrors(errs);
+  }, [email])
 
   // handle submit for signup (dispatch thunk with new entry)
   const handleSubmit = (e) => {
@@ -35,8 +44,9 @@ function SignupForm() {
 
   return (
     <div>
+      <h2 id="signupHeader">Sign Up</h2>
     <form id="signupForm" onSubmit={handleSubmit}>
-      <ul>
+      <ul style={{color: 'red'}}>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
       <label>
@@ -93,7 +103,7 @@ function SignupForm() {
           required
         />
       </label>
-      <button type="submit">Sign Up</button>
+      <button type="submit" id="signupSubmitButton">Sign Up</button>
     </form>
     </div>
     
