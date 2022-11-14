@@ -10,7 +10,7 @@ module.exports = {
         lastName: 'User',
         username: 'DemoUser',
         hashedPassword: bcrypt.hashSync('password'),
-        imageUrl: "https://www.gamespot.com/a/uploads/screen_kubrick/1179/11799911/3064740-crash.jpg",
+        imageUrl: "https://www.loudegg.com/wp-content/uploads/2020/10/Patrick-Star.jpg",
       },
       {
         email: 'Spiderman@user.io',
