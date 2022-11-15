@@ -14,7 +14,8 @@ const SingleSongPage = () => {
     // const song = useSelector(state => state.songs[songId]);
 
     const song = useSelector((state) => state.songs[songId])
-    // const song = Object.values(song2);
+    // const user = useSelector((state) => state.songs.singleSong)
+    // const user2 = Object.values(user);
     // const song = songs[songId]
 
     useEffect(() => {   
@@ -22,6 +23,7 @@ const SingleSongPage = () => {
         dispatch(getSingleSong(songId))
     }, [dispatch, songId])
 
+    // const song = useSelector((state) => state.songs.singleSong)
 
     // need user permissions
     // const changeSong = async (e) => {
@@ -46,6 +48,7 @@ const SingleSongPage = () => {
                 <div id="songContent">
 
                     <div id="songTitle">{song.title}</div>
+                    {/* <div id="songArtist">{user2.title}</div> */}
                     <div id="songDescription">{song.description}</div>
                     <img alt='song' src={song.imageUrl} style={{ position: "unset", right: "20em", margin: "20px", maxHeight: "300px", maxWidth: "300px"}}></img>
                 </div>

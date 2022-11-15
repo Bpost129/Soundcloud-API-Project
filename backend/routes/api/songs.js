@@ -76,7 +76,7 @@ router.get('/:songId/comments', async (req, res, next) => {
         include: [
             {
                 model: User,
-                attributes: ['id', 'username']
+                attributes: ['id', 'firstName', 'lastName', 'username', 'imageUrl']
             }
         ]
     })
@@ -121,7 +121,7 @@ router.get('/:songId', async (req, res, next) => {
         include: [
             { 
                 model: User,
-                attributes: ['id', 'username', 'imageUrl']
+                attributes: ['id', 'firstName', 'lastName', 'username', 'imageUrl']
             },
             { 
                 model: Album, 

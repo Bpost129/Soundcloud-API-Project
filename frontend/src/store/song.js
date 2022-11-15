@@ -118,7 +118,8 @@ const songReducer = (state = initialState, action) => {
         return {
           ...newState,
           singleSong: {
-            ...state[action.song.id]
+            ...action.song
+            // ...state[action.song.id]
           }
         }
         // const song = {};
