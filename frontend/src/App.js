@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import AudioPlayer from 'react-h5-audio-player';
 // import PlayerApp from "./components/AudioPlayer";
 // import ReactAudioPlayer from 'react-audio-player';
 
-import HomePage from "./components/HomePage"
+import SplashPage from "./components/SplashPage";
+import HomePage from "./components/HomePage";
 import UploadSongPage from "./components/UploadSongPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
@@ -18,6 +19,9 @@ function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [trackId, setTrackId] = useState(0);
+
+  const sessionUser = useSelector(state => state.session.user);
+
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
@@ -75,17 +79,38 @@ function App() {
   //   />
   // );
 
+  // if (sessionUser) return <Redirect to="/home" />;
+
   return (
     <>
+
+
+
+
       <Navigation id="mainNav" isLoaded={isLoaded} />
       {isLoaded && (
         <Switch id="mainContent">
+          
+          {/* <Route exact path="/" render={() => {
+            return (
+              sessionUser ? <Redirect to="/home" /> : <Redirect to="/" /> 
+            )}}
+          /> */}
+
+          { !sessionUser && 
           <Route exact path="/">
+            <SplashPage />
+          </Route> 
+          }
+
+          <Route default path="/home">
             <HomePage />
           </Route>
+
           <Route path="/upload">
             <UploadSongPage />
           </Route>
+
           {/* <Route path="/login">
             <LoginFormPage />
           </Route> */}
@@ -95,9 +120,11 @@ function App() {
           {/* <Route path="/songs/:songId/update">
             <UpdateSongPage />
           </Route> */}
+
           <Route path="/songs/:songId">
             <SingleSongPage />
           </Route>
+
           <Route>OH NO! Page Not Found!</Route>
         </Switch>
         

@@ -37,7 +37,7 @@ function ProfileButton({ user }) {
           {user.imageUrl ? <img alt='userPreviewPic' src={user.imageUrl} style={{marginRight:"3px", height:"25px", width:"25px", borderRadius:"12px"}}></img> : <i className="fas fa-user-circle" /> }
           <div className="profile-hover">
             <div style={{marginRight:"0px"}}>{user.username}</div>
-            <i style={{marginLeft:"0px"}} className="fa-duotone fa-angle-down"></i>
+            {/* <i style={{marginLeft:"0px"}} className="fa-duotone fa-angle-down"></i> */}
           </div>
         </div>
         

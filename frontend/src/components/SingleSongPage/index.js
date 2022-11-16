@@ -12,7 +12,7 @@ const SingleSongPage = () => {
     const dispatch = useDispatch();
     const { songId } = useParams();
     // const song = useSelector(state => state.songs[songId]);
-
+    const sessionUser = useSelector(state => state.session.user);
     const song = useSelector((state) => state.songs[songId])
     // const user = useSelector((state) => state.songs.singleSong)
     // const user2 = Object.values(user);
@@ -53,10 +53,10 @@ const SingleSongPage = () => {
                     <img alt='song' src={song.imageUrl} style={{ position: "unset", right: "20em", margin: "20px", maxHeight: "300px", maxWidth: "300px"}}></img>
                 </div>
                         {/* not actually the right solution */}
-                <div id="songButtons">
+                { sessionUser && <div id="songButtons">
                     <UpdateFormModal />     
                     <button id="deleteSongButton" onClick={removeaSong}> <i className="fa-solid fa-trash" style={{marginRight: "3px"}}></i> Delete</button>
-                </div>
+                </div> }
                 
             </div>
             <CommentSection song={song}/>

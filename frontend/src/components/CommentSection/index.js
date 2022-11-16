@@ -14,13 +14,14 @@ const CommentSection = ({ song }) => {
 
     const { songId } = useParams();
 
+    const sessionUser = useSelector(state => state.session.user);
     let comment = useSelector(state => state.songs[songId].comments);
 
     const commentState = useSelector((state) => state.comments)
     const comments = Object.values(commentState);
     // const song = songs[songId]
     const user = useSelector((state) => state.session.user)
-    const currentUserId = user.id;
+    // const currentUserId = user.id;
 
     // const songComments = useSelector((state) => {
     //     return song.comments.map(commentId => state.comments[commentId])
@@ -77,19 +78,20 @@ const CommentSection = ({ song }) => {
             </form>
             <div id="underCommentInput" style={{display:"flex", flexDirection:"row"}}>
                 <div id="artist-section" style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
-                    <img alt='artist' src={user.imageUrl} style={{marginTop:"10px", height:"100px", width:"100px", borderRadius:"50px", border:"2px solid black"}}></img>
-                    <div>{user.username}</div>
+                    {/* <img alt='artist' src={user.imageUrl} style={{marginTop:"10px", height:"100px", width:"100px", borderRadius:"50px", border:"2px solid black"}}></img>
+                    <div>{user.username}</div> */}
                 </div>
                 <div id="listedComments">
                     <ul>
                         {comments.map((comment) => {
                             return (
                                 <div key={comment.id} id="singleComment">
-                                    <img alt='user' src={user.imageUrl} style={{marginRight:"5px", border:"1px solid black", height:"30px", width:"30px", borderRadius:"15px"}}></img>
+                                    {/* <img alt='user' src={user.imageUrl} style={{marginRight:"5px", border:"1px solid black", height:"30px", width:"30px", borderRadius:"15px"}}></img> */}
                                     <li id="commentBody">{comment.body}</li>
+                                    {/* <div>{comment.user['username']}</div> */}
                                     {
-                                        comment.userId === currentUserId &&
-                                        <button id="deleteCommentButton" onClick={() => dispatch(removeComment(comment.id))}><i className="fa-solid fa-trash"></i></button>
+                                        // comment.userId === currentUserId &&
+                                        sessionUser && comment.userId === sessionUser.id && <button id="deleteCommentButton" onClick={() => dispatch(removeComment(comment.id))}><i className="fa-solid fa-trash"></i></button> 
                                     }
                                 </div>
                             )

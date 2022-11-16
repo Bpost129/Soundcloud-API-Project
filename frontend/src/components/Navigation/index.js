@@ -28,10 +28,20 @@ function Navigation({ isLoaded }){
   return (
     <ul id="navUl">
       <li>
-        <img alt='soundwave' src={logo} style={{height:"30px", width:"30px"}}></img>        
-        <NavLink id='homeLink' exact to="/">Home</NavLink>
-        <NavLink id='uploadLink' to="/upload">Upload</NavLink>
-        {isLoaded && sessionLinks}
+        <div id="leftNav">
+          { !sessionUser && <NavLink id='splashPage' exact to="/"><img alt='soundwave' src={logo} style={{height:"30px", width:"30px"}}></img></NavLink> }
+          { sessionUser && <NavLink id='splashPage' exact to="/home"><img alt='soundwave' src={logo} style={{height:"30px", width:"30px"}}></img></NavLink> }       
+            <NavLink id='homeLink' to="/home">Home</NavLink>
+        </div>
+        { sessionUser && <div id="rightNavIn">
+          <NavLink id='uploadLink' to="/upload">Upload</NavLink>
+          {isLoaded && sessionLinks}
+        </div> }
+        { !sessionUser && <div id="rightNavOut">
+          <NavLink id='uploadLink' to="/upload">Upload</NavLink>
+          {isLoaded && sessionLinks}
+        </div>}
+        
       </li>
     </ul>
   );
