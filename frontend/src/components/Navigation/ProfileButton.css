@@ -84,9 +84,10 @@
     background-color: white;
     /* padding: 10px; */
     margin-top: 32px;
-    float: left;
-    overflow: hidden;
-    margin-right: 100%;
+    right: 0;
+    left: auto;
+    /* overflow: hidden; */
+    margin-right: 20px;
     border-right: .5px solid lightgray;
     border-bottom: .5px solid lightgray;
     border-left: .5px solid lightgray;
@@ -107,6 +108,9 @@
 #logoutButton {
     background-color: white;
     border: none;
+    /* width: 100px;
+    display: flex;
+    justify-content: flex-start; */
 }
 
 .profile-dropdown div:hover > #logoutButton {

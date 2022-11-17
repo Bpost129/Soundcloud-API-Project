@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { editSong } from "../../store/song";
@@ -21,6 +21,37 @@ function UpdateSong({ song }) {
     const [showModal, setShowModal] = useState(true);
     // useEffect for validation errors
 
+    useEffect(() => {
+      const errs = [];
+
+      if (!title) {
+        errs.push("Title cannot be empty")
+      } else if (title.length < 2) {
+        errs.push("Title must be at least 3 characters")
+      } else if (title.length > 30) {
+        errs.push("Title must be less than 30 characters")
+      }
+  
+      if (!description){
+        errs.push("Username cannot be empty")
+      } else if (description.length < 3) {
+        errs.push("Username must be at least 3 characters")
+      } else if (description.length > 30) {
+        errs.push("Username must be less than 30 characters")
+      }
+  
+      if (!url) {
+        errs.push("Url name cannot be empty")
+      } else if ((url && !url.includes('.mp3')) || (url && !url.includes('.mp4')) || (url && !url.includes('.wav'))) {
+        errs.push("Url must contain .mp3, .mp4, or .wav")
+      }
+  
+      if (albumId < 0) {
+        errs.push("Must enter valid album id or choose 0")
+      } 
+  
+      setErrors(errs);
+    }, [albumId, url, description, title]); 
 
     // handle submit for uploading song (dispatch thunk with new entry)
     const handleSubmit = async (e) => {

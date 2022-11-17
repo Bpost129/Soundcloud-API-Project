@@ -22,12 +22,42 @@ function SignupForm() {
   useEffect(() => {
     const errs = [];
 
-    if (!email.includes('@') && !email.includes('.')) {
+    if (!email) {
+      errs.push("Email cannot be empty")
+    } else if (!email.includes('@') && !email.includes('.')) {
       errs.push("Must enter a valid email")
     }
+
+    if (!username){
+      errs.push("Username cannot be empty")
+    } else if (username.length < 4) {
+      errs.push("Username must be at least 4 characters")
+    } else if (username.length > 30) {
+      errs.push("Username must be less than 30 characters")
+    }
+
+    if (!firstName) {
+      errs.push("First name cannot be empty")
+    } else if (firstName.length < 2) {
+      errs.push("First name must be at least 2 characters")
+    } else if (firstName.length > 30) {
+      errs.push("First name must be less than 30 characters")
+    }
+
+    if (!lastName) {
+      errs.push("Last name cannot be empty")
+    } else if (lastName.length < 3) {
+      errs.push("Last name must be at least 3 characters")
+    } else if (lastName.length > 30) {
+      errs.push("Last name must be less than 30 characters")
+    }
+
+    
+
+
     
     setErrors(errs);
-  }, [email])
+  }, [email, username, firstName, lastName])
 
   // handle submit for signup (dispatch thunk with new entry)
   const handleSubmit = (e) => {

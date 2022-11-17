@@ -70,7 +70,9 @@
     margin-top: 20px;
     margin-left: 5px;
     margin-bottom: 5px;
-    padding: 5px
+    padding: 5px;
+
+    font-size: 18px;
 }
 
 #songArtist {
@@ -78,16 +80,22 @@
     color: white;
     margin-left: 5px;
     padding: 5px;
+
+    font-size: 14px;
 }
 
 #songDescription {
     display: flex;
-    background-color: black;
+    align-items: center;
+    background-color: gray;
     color: white;
-    margin-top: 20px;
+    margin-top: 45px;
     margin-left: 20px;
     height: 20px;
     padding: 5px;
+    border-radius: 15px;
+
+    font-size: 14px;
 }
 
 #songButtons {

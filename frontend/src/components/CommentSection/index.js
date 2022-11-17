@@ -15,12 +15,12 @@ const CommentSection = ({ song }) => {
     const { songId } = useParams();
 
     const sessionUser = useSelector(state => state.session.user);
-    let comment = useSelector(state => state.songs[songId].comments);
+    // let comment = useSelector(state => state.songs[songId].comments);
 
     const commentState = useSelector((state) => state.comments)
     const comments = Object.values(commentState);
     // const song = songs[songId]
-    const user = useSelector((state) => state.session.user)
+    // const user = useSelector((state) => state.session.user)
     // const currentUserId = user.id;
 
     // const songComments = useSelector((state) => {
@@ -28,15 +28,15 @@ const CommentSection = ({ song }) => {
     // })
 
     useEffect(() => {
-        dispatch(getAllComments(song.id))
-    }, [dispatch, song.id])
+        dispatch(getAllComments(songId))
+    }, [dispatch, songId])
 
 
     // need signed in permission
     const createaComment = async (e) => {
         e.preventDefault();
         setErrors([]);
-        comment = {
+        let comment = {
             body
         }
 
