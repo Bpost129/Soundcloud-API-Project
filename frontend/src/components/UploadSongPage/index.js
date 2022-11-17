@@ -29,25 +29,38 @@ function UploadSongPage({ song }) {
       }
   
       if (!description){
-        errs.push("Username cannot be empty")
+        errs.push("Description cannot be empty")
       } else if (description.length < 3) {
-        errs.push("Username must be at least 3 characters")
+        errs.push("Description must be at least 3 characters")
       } else if (description.length > 30) {
-        errs.push("Username must be less than 30 characters")
+        errs.push("Description must be less than 30 characters")
       }
   
       if (!url) {
         errs.push("Url name cannot be empty")
-      } else if ((url && !url.includes('.mp3')) || (url && !url.includes('.mp4')) || (url && !url.includes('.wav'))) {
-        errs.push("Url must contain .mp3, .mp4, or .wav")
+      } else if ((url && !url.includes('.mp3'))) {
+        if (url && !url.includes('.mp4')) {
+          if (url && !url.includes('.wav')) {
+            errs.push("Url must contain .mp3, .mp4, or .wav")
+          }
+        }
       }
+
+      if ((imageUrl && !imageUrl.includes('.jpg'))) {
+        if (imageUrl && !imageUrl.includes('.jpeg')) {
+          if (imageUrl && !imageUrl.includes('.png')) {
+            errs.push("Image url must contain .jpg, .jpeg, or .png")
+          }
+        }
+      }
+
   
       if (albumId < 0) {
         errs.push("Must enter valid album id or choose 0")
       } 
   
       setErrors(errs);
-    }, [albumId, url, description, title]); 
+    }, [albumId, imageUrl, url, description, title]); 
   
     
 

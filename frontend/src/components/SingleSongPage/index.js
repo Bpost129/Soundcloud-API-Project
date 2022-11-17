@@ -34,7 +34,7 @@ const SingleSongPage = () => {
     const removeaSong = async (e) => {
         e.preventDefault();
         dispatch(removeSong(song.id))
-        history.push("/")
+        history.push("/home")
     }
     
     // if (!song) return (

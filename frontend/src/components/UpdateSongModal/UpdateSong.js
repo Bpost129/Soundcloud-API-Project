@@ -42,10 +42,22 @@ function UpdateSong({ song }) {
   
       if (!url) {
         errs.push("Url name cannot be empty")
-      } else if ((url && !url.includes('.mp3')) || (url && !url.includes('.mp4')) || (url && !url.includes('.wav'))) {
-        errs.push("Url must contain .mp3, .mp4, or .wav")
+      } else if ((url && !url.includes('.mp3'))) {
+        if (url && !url.includes('.mp4')) {
+          if (url && !url.includes('.wav')) {
+            errs.push("Url must contain .mp3, .mp4, or .wav")
+          }
+        }
       }
   
+      if ((imageUrl && !imageUrl.includes('.jpg'))) {
+        if (imageUrl && !imageUrl.includes('.jpeg')) {
+          if (imageUrl && !imageUrl.includes('.png')) {
+            errs.push("Image url must contain .jpg, .jpeg, or .png")
+          }
+        }
+      }
+
       if (albumId < 0) {
         errs.push("Must enter valid album id or choose 0")
       } 
