@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
+import './ProfileButton.css';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   
   const openMenu = () => {
@@ -26,6 +29,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push("/");
   };
 
   return (
@@ -34,9 +38,9 @@ function ProfileButton({ user }) {
       <div id="profile-menu-housing" onClick={openMenu}>
         
         <div id="profile-button" >
-          {user.imageUrl ? <img alt='userPreviewPic' src={user.imageUrl} style={{marginRight:"3px", height:"25px", width:"25px", borderRadius:"12px"}}></img> : <i className="fas fa-user-circle" /> }
+          {user.imageUrl ? <img alt='userPreviewPic' id="userPreviewPic" src={user.imageUrl} style={{marginRight:"3px", height:"25px", width:"28px", borderRadius:"14px"}}></img> : <i className="fas fa-user-circle" /> }
           <div className="profile-hover">
-            <div style={{marginRight:"0px"}}>{user.username}</div>
+            <div style={{marginRight:"0px", marginLeft: "3px"}}>{user.username}</div>
             {/* <i style={{marginLeft:"0px"}} className="fa-duotone fa-angle-down"></i> */}
           </div>
         </div>
@@ -44,13 +48,13 @@ function ProfileButton({ user }) {
       </div>
         
       {showMenu && (
-        <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
+        <div className="profile-dropdown">
+          <div>{user.username}</div>
+          <div>{user.email}</div>
+          <div>
+            <button id="logoutButton" onClick={logout}>Log Out</button>
+          </div>
+        </div>
       )}
     </div>
       

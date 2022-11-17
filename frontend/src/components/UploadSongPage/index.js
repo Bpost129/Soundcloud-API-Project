@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSong } from "../../store/song";
 import './UploadSong.css';
@@ -15,6 +15,8 @@ function UploadSongPage({ song }) {
     const [albumId, setAlbumId] = useState("")
     const [errors, setErrors] = useState([]);
   
+
+    const sessionUser = useSelector(state => state.session.user);
     // useEffect(() => {
     //   // validation errors
     // }, [albumId]); 
@@ -94,7 +96,7 @@ function UploadSongPage({ song }) {
             onChange={(e) => setAlbumId(e.target.value)}
           />
         </label>
-        <button id="uploadSongButton" type="submit">Submit</button>
+        <button id="uploadSongButton" type="submit" disabled={!sessionUser}>Submit</button>
       </form>
       </div>
       

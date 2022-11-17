@@ -26,7 +26,7 @@ function SplashPage() {
                 <button>hello</button>
             <div background></div> */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundImage: `url(${bkgrd})`, backgroundSize: "100% 100%", height: "400px"}}>
-                <button style={{backgroundColor: "rgb(255, 77, 0)", color: "white", border: "1px ridge white", height: "30px", width: "75px"}}>hello</button>
+                {/* <button style={{backgroundColor: "rgb(255, 77, 0)", color: "white", border: "1px ridge white", height: "30px", width: "75px"}}>hello</button> */}
             </div>
             <h2 style={{display: "flex", justifyContent: "center", marginTop: "25px"}}>Listen to what's trending on Soundwave</h2>
             <div id="splashSongs">

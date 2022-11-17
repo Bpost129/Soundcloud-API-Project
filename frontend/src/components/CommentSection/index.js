@@ -87,12 +87,11 @@ const CommentSection = ({ song }) => {
                             return (
                                 <div key={comment.id} id="singleComment">
                                     {/* <img alt='user' src={user.imageUrl} style={{marginRight:"5px", border:"1px solid black", height:"30px", width:"30px", borderRadius:"15px"}}></img> */}
-                                    <li id="commentBody">{comment.body}</li>
-                                    {/* <div>{comment.user['username']}</div> */}
-                                    {
-                                        // comment.userId === currentUserId &&
-                                        sessionUser && comment.userId === sessionUser.id && <button id="deleteCommentButton" onClick={() => dispatch(removeComment(comment.id))}><i className="fa-solid fa-trash"></i></button> 
-                                    }
+                                    <div id="mainContent">
+                                        <li id="commentBody">{comment.body}</li>
+                                        { sessionUser && comment.userId === sessionUser.id && <button id="deleteCommentButton" onClick={() => dispatch(removeComment(comment.id))}><i className="fa-solid fa-trash"></i></button> }
+                                    </div>
+                                        
                                 </div>
                             )
                         })}

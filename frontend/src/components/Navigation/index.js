@@ -29,8 +29,8 @@ function Navigation({ isLoaded }){
     <ul id="navUl">
       <li>
         <div id="leftNav">
-          { !sessionUser && <NavLink id='splashPage' exact to="/"><img alt='soundwave' src={logo} style={{height:"30px", width:"30px"}}></img></NavLink> }
-          { sessionUser && <NavLink id='splashPage' exact to="/home"><img alt='soundwave' src={logo} style={{height:"30px", width:"30px"}}></img></NavLink> }       
+          { !sessionUser && <NavLink id='splashPageOut' exact to="/"><img alt='soundwave' src={logo} style={{height:"30px", width:"30px"}}></img></NavLink> }
+          { sessionUser && <NavLink id='splashPageIn' exact to="/home"><img alt='soundwave' src={logo} style={{height:"30px", width:"30px"}}></img></NavLink> }       
             <NavLink id='homeLink' to="/home">Home</NavLink>
         </div>
         { sessionUser && <div id="rightNavIn">

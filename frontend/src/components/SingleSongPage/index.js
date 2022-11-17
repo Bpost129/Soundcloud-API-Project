@@ -6,6 +6,7 @@ import { getSingleSong, getAllSongs } from '../../store/song'
 import UpdateFormModal from '../UpdateSongModal';
 import './SingleSongPage.css';
 import CommentSection from '../CommentSection';
+import play from './images/play2.png'
 
 const SingleSongPage = () => {
     const history = useHistory();
@@ -46,10 +47,17 @@ const SingleSongPage = () => {
         <div className="songPage" id="singleSongComps"> 
             <div id="singleSong">
                 <div id="songContent">
-
-                    <div id="songTitle">{song.title}</div>
-                    {/* <div id="songArtist">{user2.title}</div> */}
-                    <div id="songDescription">{song.description}</div>
+                    <div id="songInfo">
+                        <div id="withPlay">
+                            <div id="outterPlayIcon"><img alt="play" src={play} style={{height:"60px", width:"60px"}}></img></div>
+                            <div id="songStuff">
+                                <div id="songTitle">{song.title}</div>
+                                <div id="songArtist">{song.userId}</div>
+                            </div>
+                        </div>
+                        
+                        <div id="songDescription">{song.description}</div>
+                    </div>
                     <img alt='song' src={song.imageUrl} style={{ position: "unset", right: "20em", margin: "20px", maxHeight: "300px", maxWidth: "300px"}}></img>
                 </div>
                         {/* not actually the right solution */}
