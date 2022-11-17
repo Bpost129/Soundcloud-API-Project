@@ -134,7 +134,7 @@ function App() {
           <AudioPlayer id="mainAudio"
             src={tracks[trackId].src}
             style={{ position: "fixed", textAlign:"right", bottom: "0px", paddingRight: "26%", paddingLeft: "26%", backgroundColor: "rgb(240, 240, 240)", borderTop: ".8px solid rgb(150, 150, 150)", boxShadow: "none"}}
-            autoPlay
+            // autoPlay
             // header={`Now Playing: ${tracks[trackId].name}`}
             showSkipControls={true}
             showJumpControls={false}
