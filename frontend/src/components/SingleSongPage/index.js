@@ -15,12 +15,13 @@ const SingleSongPage = () => {
     // const song = useSelector(state => state.songs[songId]);
     const sessionUser = useSelector(state => state.session.user);
     const song = useSelector((state) => state.songs['singleSong'])
-    // const user = useSelector((state) => state.songs.singleSong)
+    // const user = useSelector((state) => state.songs['singleSong'])
     // const userObj = Object.values(user);
     // const finalUser = userObj['User'];
 
     useEffect(() => {   
-        dispatch(getAllSongs())
+        // dispatch(getAllSongs())
+        
         dispatch(getSingleSong(songId))
     }, [dispatch, songId])
 
@@ -52,7 +53,7 @@ const SingleSongPage = () => {
                             <div id="outterPlayIcon"><img alt="play" src={play} style={{height:"60px", width:"60px"}}></img></div>
                             <div id="songStuff">
                                 <div id="songTitle">{song.title}</div>
-                                {/* <div id="songArtist">{finalUser.username}</div> */}
+                                {/* <div id="songArtist">{song.user.id}</div> */}
                             </div>
                         </div>
                         
@@ -63,7 +64,7 @@ const SingleSongPage = () => {
                         {/* not actually the right solution */}
                 { sessionUser && song.userId === sessionUser.id && 
                 <div id="songButtons">
-                    <UpdateFormModal />     
+                    <UpdateFormModal song={song}/>     
                     <button id="deleteSongButton" onClick={removeaSong}> <i className="fa-solid fa-trash" style={{marginRight: "3px"}}></i> Delete</button>
                 </div> }
                 

@@ -83,7 +83,7 @@
     color: black;
     background-color: white;
     /* padding: 10px; */
-    margin-top: 32px;
+    margin-top: 30px;
     right: 0;
     left: auto;
     /* overflow: hidden; */
@@ -91,7 +91,8 @@
     border-right: .5px solid lightgray;
     border-bottom: .5px solid lightgray;
     border-left: .5px solid lightgray;
-    border-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 .profile-dropdown div {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { editSong } from "../../store/song";
+import { editSong, getSingleSong } from "../../store/song";
 import './UpdateSong.css';
 import { Modal } from "../../context/Modal";
 
@@ -63,13 +63,14 @@ function UpdateSong({ song }) {
       } 
   
       setErrors(errs);
-    }, [albumId, url, description, title]); 
+    }, [albumId, imageUrl, url, description, title]); 
 
     // handle submit for uploading song (dispatch thunk with new entry)
     const handleSubmit = async (e) => {
       e.preventDefault();
       setErrors([]);
-      song = {
+      
+      let song = {
         id: song2.id,
         title,
         description,
@@ -77,12 +78,12 @@ function UpdateSong({ song }) {
         imageUrl,
         albumId: albumId === "" ? null : Number(albumId),
       }
-
-      let editedSong = await dispatch(editSong(song))
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        });
+      
+      dispatch(editSong(song))
+        // .catch(async (res) => {
+        //   const data = await res.json();
+        //   if (data && data.errors) setErrors(data.errors);
+        // });
 
       setShowModal(false);
     };
